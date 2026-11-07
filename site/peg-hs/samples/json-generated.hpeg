@@ -1,0 +1,60 @@
+# The JSON (RFC 8259) grammar without type annotations, actions and bindings,
+# leaving the types of the values to inference and generation (ADR 0075). It has the rules of json/Json.hpeg in the same order.
+%module Conformance.Bench.JsonGenerated
+
+Json <- Ws Value Ws
+
+Value <- 'null'
+      / 'true'
+      / 'false'
+      / Number
+      / String
+      / Array
+      / Object
+
+Object <- '{' Ws Members '}'
+       / '{' Ws '}'
+
+Members <- Member MoreMember*
+
+MoreMember <- ',' Ws Member
+
+Member <- String Ws ':' Ws Value Ws
+
+Array <- '[' Ws Elements ']'
+      / '[' Ws ']'
+
+Elements <- Element MoreElement*
+
+MoreElement <- ',' Ws Element
+
+Element <- Value Ws
+
+Number <- $('-'? IntPart Frac? Exp?)
+
+IntPart <- '0'
+        / [1-9] [0-9]*
+
+Frac <- '.' [0-9]+
+
+Exp <- [eE] [+\-]? [0-9]+
+
+String <- '"' Unit* '"'
+
+# One unit of a string
+Unit <- '\\' Escape
+     / $[\u{20}-\u{21}\u{23}-\u{5B}\u{5D}-\u{10FFFF}]
+
+Escape <- '"'
+       / '\\'
+       / '/'
+       / 'b'
+       / 'f'
+       / 'n'
+       / 'r'
+       / 't'
+       / 'u' $(Hex Hex Hex Hex)
+
+Hex <- [0-9a-fA-F]
+
+Ws <- [ \t\n\r]*

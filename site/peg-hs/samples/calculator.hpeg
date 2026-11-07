@@ -1,0 +1,14 @@
+%module Calc.Generated
+
+Expr <- Expr '+' Sp Term @Add
+     / Term
+
+Term <- Term '*' Sp Atom @Mul
+     / Atom
+
+Atom <- Num
+     / '(' Sp Expr ')' Sp
+
+Num <- $[0-9]+ Sp
+
+Sp <- ' '*

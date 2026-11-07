@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>peg-hs — Haskell parsers from PEG grammars</title>
+<meta name="description" content="peg-hs generates Haskell parsers from PEG grammars. Left recursion is accepted as written.">
+<link rel="stylesheet" href="../base.css">
+<link rel="stylesheet" href="style.css">
+<script type="module" src="main.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <nav aria-label="Page">
+    <a class="name" href="../">tett23</a> <span class="crumb">/ peg-hs</span>
+    <span class="links">
+      <a href="#playground">Playground</a>
+      <a href="https://github.com/tett23/peg-hs/blob/main/docs/syntax.en.md">Docs</a>
+      <a href="https://github.com/tett23/peg-hs/releases">Releases</a>
+      <a href="https://github.com/tett23/peg-hs">GitHub</a>
+    </span>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <p class="kicker">peg-hs · Haskell parsers from PEG grammars</p>
+      <h1>Left recursion,<br>as written.</h1>
+      <p class="sub">Write <code>Expr &lt;- Expr '+' Term / Term</code> and it parses. peg-hs accepts direct and indirect left recursion, so a grammar can keep the shape of the language manual instead of being rewritten for the parser.</p>
+      <div class="cta"><a class="primary" href="#playground">Try it in the browser</a><a href="#install">Install v0.1.0-rc5</a></div>
+    </div>
+    <figure class="pair">
+      <figcaption class="lbl"><span>Calc.hpeg</span><span>no types, no actions</span></figcaption>
+<pre><code>%module Calc.Generated
+
+<mark>Expr &lt;- Expr</mark> '+' Sp Term @Add
+     / Term
+
+<mark>Term &lt;- Term</mark> '*' Sp Atom @Mul
+     / Atom
+
+Atom &lt;- Num
+     / '(' Sp Expr ')' Sp
+
+Num &lt;- $[0-9]+ Sp
+
+Sp &lt;- ' '*</code></pre>
+      <div class="lbl"><span>generated types</span><span>peg-hs gen</span></div>
+<pre><code>data Expr = Add Expr Term | Expr2 Term
+  deriving (Eq, Show)
+
+data Term = Mul Term Atom | Term2 Atom
+  deriving (Eq, Show)
+
+data Atom = Atom1 Text | Atom2 Expr
+  deriving (Eq, Show)</code></pre>
+    </figure>
+  </header>
+
+  <section aria-labelledby="pillars-h">
+    <h2 id="pillars-h">Three things peg-hs cares about</h2>
+    <div class="pillars">
+      <div>
+        <h3>Left recursion as written</h3>
+        <p>Direct and indirect left recursion are accepted, with the semantics of bounded left recursion (Medeiros et al. 2014). The Lua 5.5 grammar keeps the manual's indirect left recursion and accepts all 34 files of the official test suite.</p>
+      </div>
+      <div>
+        <h3>Generate where speed doesn't matter, write where it does</h3>
+        <p>A rule without a type annotation or an action gets a generated type, so most rules need no Haskell at all. When a rule needs to be fast, give that rule a type and an action; the rest stays generated.</p>
+        <p class="num">On an 800,000-character JSON document, generated types took 0.97× the time and 1.18× the peak memory of the typed grammar.</p>
+      </div>
+      <div>
+        <h3>Errors at the grammar</h3>
+        <p>GHC reports a type error in an action at the line and column of the <code>.hpeg</code> file, not somewhere in a generated module you never wrote.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="example-h">
+    <h2 id="example-h">One grammar, two styles</h2>
+    <p class="intro">The calculator with addition, multiplication and parentheses. On the left, every rule has a type and an action that builds your own AST. On the right, the same grammar with neither: peg-hs generates the types shown above. A grammar can mix the two rule by rule.</p>
+    <div class="two">
+      <figure class="pair">
+        <figcaption class="lbl"><span>typed values</span><span>types and actions</span></figcaption>
+<pre><code>%module Calc.Parser
+%{
+import qualified Data.Text as T
+
+data Expr = Num Int | Add Expr Expr | Mul Expr Expr
+  deriving (Show)
+}%
+
+Expr :: Expr
+Expr &lt;- l:Expr '+' Sp r:Term { Add l r }
+     / Term
+
+Term :: Expr
+Term &lt;- l:Term '*' Sp r:Atom { Mul l r }
+     / Atom
+
+Atom :: Expr
+Atom &lt;- d:$[0-9]+ Sp { Num (read (T.unpack d)) }
+     / '(' Sp Expr ')' Sp
+
+Sp &lt;- ' '*</code></pre>
+        <div class="lbl"><span>peg-hs parse Calc.hpeg input.txt</span><span>1 + 2 * (3 + 4)</span></div>
+<pre><code>Add (Num 1) (Mul (Num 2) (Add (Num 3) (Num 4)))</code></pre>
+      </figure>
+      <figure class="pair">
+        <figcaption class="lbl"><span>generated types</span><span>no types, no actions</span></figcaption>
+<pre><code>%module Calc.Generated
+
+Expr &lt;- Expr '+' Sp Term @Add
+     / Term
+
+Term &lt;- Term '*' Sp Atom @Mul
+     / Atom
+
+Atom &lt;- Num
+     / '(' Sp Expr ')' Sp
+
+Num &lt;- $[0-9]+ Sp
+
+Sp &lt;- ' '*</code></pre>
+        <div class="lbl"><span>what peg-hs decides</span><span></span></div>
+        <ul class="rules">
+          <li><code>Sp</code> has no value but <code>()</code>, so its type is <code>()</code>.</li>
+          <li><code>Num</code> has one value, the <code>Text</code> of <code>$[0-9]+</code>, so its type is <code>Text</code>.</li>
+          <li><code>Expr</code>, <code>Term</code> and <code>Atom</code> get a data type with a constructor per alternative. <code>@Add</code> names one; the others are numbered (<code>Expr2</code>).</li>
+        </ul>
+      </figure>
+    </div>
+  </section>
+
+  <section aria-labelledby="why-h">
+    <h2 id="why-h">Why another parser generator</h2>
+    <div class="two">
+      <div>
+        <p>Like happy and alex, peg-hs is a standalone generator, not a Template Haskell library. A generated module depends only on peg-runtime, and the same grammar generates the same module byte for byte, so the module can be committed and reviewed.</p>
+        <p>With parser combinators such as Parsec and Megaparsec, the grammar lives inside the program, and left recursion has to be rewritten by hand. In peg-hs the grammar is a file of its own, written the way the language is specified.</p>
+      </div>
+      <div>
+        <p>pest also keeps a PEG grammar in a file of its own. peg-hs differs in what a rule returns: each rule has a Haskell type, written or generated, so <code>parse</code> gives your AST directly.</p>
+        <p>With <code>%syntax</code>, peg-hs also builds a lossless syntax tree that keeps whitespace and comments, and with <code>%recover</code> it reports several errors in one parse, for formatters and language servers.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="conf-h">
+    <h2 id="conf-h">Checked against real languages</h2>
+    <dl class="conf">
+      <div><dt>JSON</dt><dd><b>95 + 188</b><span>all must-accept and must-reject cases of JSONTestSuite</span></dd></div>
+      <div><dt>CommonMark 0.31.2</dt><dd><b>652</b><span>all examples of the specification conform</span></dd></div>
+      <div><dt>Lua 5.5</dt><dd><b>34</b><span>all files of the official Lua 5.5.1 test suite, with the manual's indirect left recursion</span></dd></div>
+      <div><dt>TOML 1.1.0</dt><dd><b>214 + 467</b><span>all valid and invalid cases of toml-test v2.2.0</span></dd></div>
+    </dl>
+  </section>
+
+  <section id="playground" aria-labelledby="play-h">
+    <h2 id="play-h">Playground</h2>
+    <p class="hint">The generator runs in your browser as WebAssembly. Input text is not parsed here; to parse an input with a grammar, use <code>peg-hs parse</code>.</p>
+    <div class="play">
+      <div class="bar">
+        <label>Sample
+          <select data-sample>
+            <option value="json-generated">JSON (generated types)</option>
+            <option value="json-typed">JSON (typed)</option>
+            <option value="calculator">Calculator</option>
+            <option value="" hidden>From a link</option>
+          </select>
+        </label>
+        <span class="actions"><button type="button" data-format>Format</button><button type="button" data-share>Copy share link</button></span>
+      </div>
+      <p class="notice" data-notice role="status" hidden></p>
+      <div class="panes">
+        <div class="ed">
+          <label for="grammar" class="visually-hidden">Grammar</label>
+          <textarea id="grammar" data-editor spellcheck="false" autocomplete="off" autocapitalize="off" wrap="off"></textarea>
+        </div>
+        <div class="out" data-out>
+          <p class="status" data-status role="status">Loading the generator…</p>
+          <ol class="diagnostics" data-diagnostics aria-label="Diagnostics"></ol>
+          <div class="tabs" role="tablist" aria-label="Output">
+            <button type="button" role="tab" id="t-ast" aria-controls="p-ast">Grammar AST</button>
+            <button type="button" role="tab" id="t-module" aria-controls="p-module">Generated module</button>
+            <button type="button" role="tab" id="t-types" aria-controls="p-types">Generated types</button>
+          </div>
+          <div class="panel" role="tabpanel" id="p-ast" aria-labelledby="t-ast" data-panel="ast" tabindex="0" hidden></div>
+          <div class="panel" role="tabpanel" id="p-module" aria-labelledby="t-module" data-panel="module" tabindex="0" hidden></div>
+          <div class="panel" role="tabpanel" id="p-types" aria-labelledby="t-types" data-panel="types" tabindex="0"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="install" aria-labelledby="install-h">
+    <h2 id="install-h">Install</h2>
+    <div class="two">
+      <div>
+        <p>GitHub <a href="https://github.com/tett23/peg-hs/releases/tag/v0.1.0-rc5">Releases</a> has <code>peg-hs</code> for Linux (x86-64) and macOS (arm64). Extract the archive and put <code>peg-hs</code> on your <code>PATH</code>. The release is a candidate; peg-hs is not on Hackage yet.</p>
+<pre class="cmd"><code>tar xzf peg-hs-0.1.0-rc5-x86_64-linux.tar.gz
+install peg-hs-0.1.0-rc5-x86_64-linux/peg-hs ~/.local/bin/
+peg-hs --version</code></pre>
+      </div>
+      <div>
+        <p>On other platforms, build from source with GHC 9.10, 9.12 or 9.14 and cabal-install.</p>
+<pre class="cmd"><code>git clone https://github.com/tett23/peg-hs.git
+cd peg-hs
+cabal install exe:peg-hs --installdir="$HOME/.local/bin" \
+  --install-method=copy --overwrite-policy=always</code></pre>
+        <ul class="links">
+          <li><a href="https://github.com/tett23/peg-hs#readme">README</a></li>
+          <li><a href="https://github.com/tett23/peg-hs/blob/main/docs/syntax.en.md">Grammar notation</a></li>
+          <li><a href="https://github.com/tett23/peg-hs">Repository</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>peg-hs · MIT License · <a href="../">tett23</a></footer>
+</div>
+</body>
+</html>

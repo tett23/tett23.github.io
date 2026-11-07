@@ -1,0 +1,5 @@
+# name URL SHA-256 (ADR 0002). Fetched by scripts/fetch-assets.sh.
+nablaskk.wasm https://github.com/tett23/NablaSKK/releases/download/v1.3.0/nablaskk.wasm 3dc5295a980bd20caddb00182fdfdffeda19e590731f58d8e4e882631fab52bb
+SKK-JISYO.S https://github.com/tett23/NablaSKK/releases/download/v1.3.0/SKK-JISYO.S 9899d5a204bfd5e84d4bf3d52d52bcea724dadea7f5b416f2712a65411cb9285
+peg-hs.wasm https://github.com/tett23/peg-hs/releases/download/v0.1.0-rc5/peg-hs.wasm 8476f6fa952a1f7c57a2109960d55f8cc6887abd1db1b4afbe5605df333d4685
+shem.wasm https://github.com/tett23/shem/releases/download/v0.1.0-rc6/shem.wasm 597c4144bb66fb08f09a07e8fe47e6cd5b766dd3c82304aa6d880571730a8c9f

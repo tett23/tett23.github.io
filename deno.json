@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "lib": ["deno.ns", "dom", "dom.iterable", "esnext"],
+    "strict": true
+  },
+  "fmt": {
+    "include": ["site/", "scripts/"],
+    "exclude": ["**/*.md", "**/*.html", "**/*.svg"],
+    "lineWidth": 120
+  },
+  "lint": {
+    "include": ["site/", "scripts/"]
+  },
+  "test": {
+    "include": ["site/", "scripts/"]
+  },
+  "tasks": {
+    "check": "deno check site/ scripts/",
+    "test": "deno test --allow-read --allow-write --allow-run=sh --allow-env"
+  }
+}

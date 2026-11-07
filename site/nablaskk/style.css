@@ -1,0 +1,612 @@
+/* NablaSKK page (ADR 0003). White page; navy and gold from the app icon. */
+:root {
+  --navy: #1a253f;
+  --navy-2: #24324f;
+  --gold: #e8c77a;
+  --ink: #111111;
+  --muted: #555555;
+  --rule: #dddddd;
+  --red: #c00014;
+  --mincho: "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Yu Mincho", "YuMincho", serif;
+  --gothic: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+body {
+  background: #ffffff;
+  color: var(--ink);
+  font: 16px/1.9 var(--gothic);
+}
+
+a {
+  color: inherit;
+}
+
+code,
+kbd {
+  font-family: var(--mono);
+  font-size: 0.92em;
+}
+
+kbd {
+  border: 1px solid #bbbbbb;
+  border-bottom-width: 2px;
+  padding: 0 0.3em;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+/* hero */
+.hero {
+  background: var(--navy);
+  color: #ffffff;
+}
+
+.hero nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 22px 64px 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 14px;
+  color: #c9d1e3;
+}
+
+.hero nav .home {
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.hero nav span {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+}
+
+.hero nav span a {
+  text-decoration: none;
+}
+
+.hero nav a:hover {
+  text-decoration: underline;
+}
+
+.hero-in {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 56px 64px 72px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 36%);
+  gap: 32px;
+  align-items: center;
+}
+
+.hero h1 {
+  font-weight: 600;
+}
+
+.hero .name {
+  display: block;
+  font: 600 15px/1 var(--gothic);
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+
+.hero .copy {
+  display: block;
+  font-family: var(--mincho);
+  font-size: clamp(40px, 5.4vw, 72px);
+  line-height: 1.25;
+  word-break: keep-all;
+  letter-spacing: 0.02em;
+}
+
+.hero .copy em {
+  font-style: normal;
+  color: var(--gold);
+}
+
+.lead {
+  margin-top: 28px;
+  font-size: 18px;
+  color: #d3d9e8;
+  max-width: 34em;
+}
+
+.install {
+  margin-top: 36px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  font-size: 14px;
+}
+
+.install pre {
+  flex-basis: 100%;
+  white-space: pre-wrap;
+  word-break: break-all;
+  background: #0f1729;
+  border: 1px solid #34425f;
+  padding: 12px 16px;
+  color: #e8ecf4;
+  font: 13px/1.6 var(--mono);
+}
+
+.install a {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 18px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.install a:hover {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.meta {
+  margin-top: 18px;
+  font-size: 13px;
+  color: #a9b2c7;
+}
+
+.logo {
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+}
+
+/* sections */
+main section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 72px 64px;
+  border-top: 1px solid var(--rule);
+}
+
+main section:first-child {
+  border-top: 0;
+}
+
+h2 {
+  font-family: var(--mincho);
+  font-size: 36px;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+h2 small {
+  display: block;
+  font: 13px/1 var(--gothic);
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
+}
+
+h2 code {
+  font-size: 0.8em;
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  margin-top: 32px;
+}
+
+p + p {
+  margin-top: 1em;
+}
+
+.narrow {
+  max-width: 40em;
+}
+
+/* 試す */
+.demo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 32px;
+  margin-top: 32px;
+}
+
+.guide {
+  margin-bottom: 12px;
+}
+
+.field {
+  border: 1px solid #888888;
+  padding: 20px 22px;
+  min-height: 150px;
+  font-size: 22px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-break: break-all;
+  cursor: text;
+}
+
+.field:focus {
+  outline: 3px solid var(--navy);
+  outline-offset: 2px;
+}
+
+.field .composing:not(:empty) {
+  border-bottom: 2px solid var(--ink);
+}
+
+.field .caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  margin: 0 -1px;
+  vertical-align: -3px;
+  background: transparent;
+}
+
+.field:focus .caret {
+  background: var(--ink);
+}
+
+.mode {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.cands {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  font-size: 17px;
+  align-items: baseline;
+}
+
+.cands span.on b {
+  background: var(--navy);
+  color: #ffffff;
+}
+
+.cands b {
+  padding: 0 6px;
+  font-weight: 400;
+}
+
+.cands i {
+  font: 12px var(--mono);
+  color: var(--muted);
+  margin-right: 2px;
+  font-style: normal;
+}
+
+.cands .page {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.annotation {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.warn {
+  margin-top: 12px;
+  padding: 8px 12px;
+  border-left: 3px solid var(--red);
+  color: var(--red);
+  font-size: 14px;
+}
+
+.note {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.note p + p {
+  margin-top: 0.5em;
+}
+
+.rulebox {
+  border: 1px solid var(--rule);
+  padding: 18px 20px;
+  font-size: 14px;
+  align-self: start;
+}
+
+.rulebox h3 {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.rulebox .hint {
+  margin: 6px 0 10px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.rulebox textarea {
+  width: 100%;
+  border: 1px solid #888888;
+  padding: 8px 10px;
+  font: 14px/1.7 var(--mono);
+  resize: vertical;
+}
+
+.rulebox textarea:focus {
+  outline: 3px solid var(--navy);
+  outline-offset: 1px;
+}
+
+.results {
+  list-style: none;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.results li {
+  padding: 4px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.results code {
+  font-weight: 600;
+}
+
+.results .bad {
+  color: var(--red);
+}
+
+/* キーを自分で決める */
+.conf {
+  background: var(--navy);
+  color: #e8ecf4;
+  padding: 16px 20px;
+  font: 14px/1.8 var(--mono);
+  margin-top: 18px;
+  overflow-x: auto;
+}
+
+.conf code {
+  font-size: inherit;
+}
+
+.conf .c {
+  color: #9aa6c2;
+}
+
+.conf b {
+  color: var(--gold);
+  font-weight: 400;
+}
+
+.facts {
+  list-style: none;
+}
+
+.facts li {
+  padding: 10px 0;
+  border-top: 1px solid var(--rule);
+}
+
+.facts li:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+/* 設定アプリ */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 28px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 14px;
+}
+
+.tabs button {
+  padding: 10px 18px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.tabs button[aria-selected="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+  font-weight: 600;
+}
+
+/* Without scripts: the slides scroll sideways. */
+.track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  margin-top: 32px;
+}
+
+.carousel.js .track {
+  overflow: visible;
+}
+
+.slide {
+  scroll-snap-align: start;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 32px;
+  align-items: end;
+}
+
+.slide[hidden] {
+  display: none;
+}
+
+.slide img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+}
+
+.slide h3 {
+  font-family: var(--mincho);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.cnav {
+  display: none;
+}
+
+.carousel.js .cnav {
+  margin-top: 24px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.cnav button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--ink);
+  background: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.cnav button:disabled {
+  border-color: var(--rule);
+  color: #999999;
+  cursor: default;
+}
+
+/* AquaSKK との違い */
+.table-wrap {
+  overflow-x: auto;
+}
+
+table.cmp {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 28px;
+  font-size: 15px;
+}
+
+table.cmp th,
+table.cmp td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+
+table.cmp thead th {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 600;
+  border-bottom: 2px solid var(--ink);
+}
+
+table.cmp th[scope="row"] {
+  font-weight: 400;
+  width: 34%;
+}
+
+table.cmp td:last-child {
+  color: var(--muted);
+}
+
+table.cmp tr.group th {
+  font-family: var(--mincho);
+  font-weight: 600;
+  font-size: 16px;
+  padding-top: 28px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.after {
+  margin-top: 18px;
+}
+
+/* インストール */
+.cmd {
+  margin: 16px 0;
+  padding: 12px 16px;
+  background: #f4f4f4;
+  border: 1px solid var(--rule);
+  white-space: pre-wrap;
+  word-break: break-all;
+  font: 13px/1.6 var(--mono);
+}
+
+.steps {
+  padding-left: 1.4em;
+}
+
+.steps li + li {
+  margin-top: 0.4em;
+}
+
+.links {
+  list-style: none;
+  margin-top: 16px;
+}
+
+.links li {
+  padding: 6px 0;
+}
+
+footer {
+  background: var(--navy);
+  color: #c9d1e3;
+  font-size: 13px;
+}
+
+footer div {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 64px;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 900px) {
+  .hero nav,
+  .hero-in,
+  main section,
+  footer div {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .hero-in,
+  .demo,
+  .cols,
+  .slide {
+    grid-template-columns: 1fr;
+  }
+
+  .logo {
+    max-width: 220px;
+    order: -1;
+  }
+
+  h2 {
+    font-size: 28px;
+  }
+
+  .cols {
+    gap: 24px;
+  }
+}

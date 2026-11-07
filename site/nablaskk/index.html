@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NablaSKK — 言語の自由をとりもどそう</title>
+<meta name="description" content="NablaSKK は、AquaSKK の入力エンジンを Rust で書きなおした macOS の SKK です。キーの割り当てを設定アプリで自分で決められます。">
+<link rel="icon" href="AppIcon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../base.css">
+<link rel="stylesheet" href="style.css">
+<script type="module" src="main.js"></script>
+</head>
+<body>
+<header class="hero">
+  <nav aria-label="ページ内">
+    <a class="home" href="../">tett23</a>
+    <span>
+      <a href="#try">試す</a>
+      <a href="#app">設定アプリ</a>
+      <a href="#compare">AquaSKK との違い</a>
+      <a href="https://github.com/tett23/NablaSKK">GitHub</a>
+    </span>
+  </nav>
+  <div class="hero-in">
+    <div>
+      <h1><span class="name">NablaSKK</span><span class="copy">言語の自由を<br><em>とりもどそう</em></span></h1>
+      <p class="lead">NablaSKK は、AquaSKK の入力エンジンを Rust で書きなおした macOS の SKK です。使い心地はそのままに、どのキーで何を打つかを、設定アプリで自分で決められます。</p>
+      <div class="install">
+        <pre><code>curl -fsSL https://raw.githubusercontent.com/tett23/NablaSKK/main/install.sh | sh</code></pre>
+        <a href="https://github.com/tett23/NablaSKK/releases/tag/v1.3.0">リリース v1.3.0</a>
+        <a href="#install">インストールの手順</a>
+      </div>
+      <p class="meta">macOS 12 以降 · Apple シリコンと Intel · GPL-2.0-or-later</p>
+    </div>
+    <img class="logo" src="AppIcon.svg" alt="NablaSKK のロゴ。紺の地に金の ∇">
+  </div>
+</header>
+
+<main>
+  <section id="try" aria-labelledby="try-h">
+    <h2 id="try-h"><small>試す</small>ブラウザの中で、NablaSKK のエンジンが動いています</h2>
+    <div class="demo" data-demo>
+      <div>
+        <p class="guide">変換したい語は大文字で始めます（例：<kbd>Kanji</kbd>、<kbd>KaKu</kbd>）。次の候補は <kbd>Space</kbd> で出します。</p>
+        <div class="field-wrap">
+          <div class="field" data-field role="textbox" aria-multiline="true" aria-label="NablaSKK で入力する欄" aria-describedby="try-notes" tabindex="0"><span data-text></span><span class="composing" data-composing></span><span class="caret" aria-hidden="true"></span><span data-after></span></div>
+          <p class="mode" aria-live="polite">入力モード：<span data-mode>かな</span></p>
+        </div>
+        <div class="cands" data-cands hidden aria-live="polite"></div>
+        <p class="annotation" data-annotation hidden></p>
+        <p class="warn" data-warn role="alert" hidden>OS の日本語入力がオンになっています。OS の日本語入力をオフにしてから打ってください。</p>
+        <p class="warn" data-touch hidden>試すには物理キーボードが要ります。キーボードをつないだコンピューターで開いてください。</p>
+        <p class="warn" data-error role="alert" hidden>エンジンを読み込めませんでした。ページを読み込みなおしてください。</p>
+        <div id="try-notes" class="note">
+          <p>小さい辞書（SKK-JISYO.S）で動かしているので、変換できない語があります。登録した単語はメモリの上だけにあり、ページを閉じると消えます。OS の日本語入力はオフにしてください。</p>
+          <p class="keys"><kbd>Ctrl-J</kbd> かなモード　<kbd>l</kbd> 英数モード　<kbd>q</kbd> ひらがなとカタカナの切りかえ　<kbd>x</kbd> 前の候補　<kbd>Enter</kbd> 確定　<kbd>Ctrl-G</kbd> 取り消し</p>
+        </div>
+      </div>
+      <form class="rulebox" data-rules>
+        <h3><label for="rules">ローマ字かなルールを足す</label></h3>
+        <p class="hint"><code>入力,ひらがな,カタカナ,半角カナ</code> を 1 行に 1 つ。書きかえるとすぐ左の欄に反映します。</p>
+        <textarea id="rules" name="rules" rows="4" spellcheck="false" autocomplete="off">fj,、,、,､</textarea>
+        <ol class="results" data-results aria-live="polite"></ol>
+      </form>
+    </div>
+  </section>
+
+  <section id="keys" aria-labelledby="keys-h">
+    <h2 id="keys-h"><small>キーを自分で決める</small><code>fj</code> で読点を打つ。そういうことが、設定アプリでできます</h2>
+    <div class="cols">
+      <div class="narrow">
+        <p>SKK には <code>z.</code> で「…」、<code>z/</code> で「・」のような記号のルールが最初から入っています。NablaSKK では、これを好きなキーの並びに広げられます。句読点のキーが遠ければ、ホームポジションの <code>fj</code> に「、」を割り当てればいい。</p>
+        <p>足した行は、本家と同じ書式の <code>kana-rule.conf</code> に保存されます。設定アプリを使わずに、dotfiles で管理することもできます。</p>
+        <pre class="conf"><code><span class="c"># ~/Library/Application Support/NablaSKK/kana-rule.conf</span>
+<b>fj</b>,、,、,､
+<b>fk</b>,。,。,｡</code></pre>
+      </div>
+      <ul class="facts">
+        <li>ひらがな、カタカナ、半角カナのそれぞれに、出す文字を決められます。</li>
+        <li>組み込みのルールや先に足した行とぶつかる行は、赤く示して理由を書き、保存しません。</li>
+        <li>自分で足した行は、組み込みのルール、AZIK や ACT、句読点の設定より後に重ねるので、自分で決めたものが勝ちます。</li>
+        <li>「かなモードへ」「確定」などの操作ごとに、キーを変えられます。変える前のキーも並べて表示します。</li>
+        <li>変えたキーだけを <code>keymap.conf</code> に保存します。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="app" aria-labelledby="app-h">
+    <h2 id="app-h"><small>設定アプリ</small>設定ファイルを開かなくていい</h2>
+    <div class="carousel" data-carousel aria-roledescription="carousel" aria-labelledby="app-h">
+      <div class="tabs" role="tablist" aria-label="設定アプリのページ">
+        <button type="button" role="tab" id="tab-dict" aria-controls="slide-dict">辞書</button>
+        <button type="button" role="tab" id="tab-user" aria-controls="slide-user">ユーザー辞書</button>
+        <button type="button" role="tab" id="tab-skkserv" aria-controls="slide-skkserv">skkserv</button>
+        <button type="button" role="tab" id="tab-input" aria-controls="slide-input">入力</button>
+        <button type="button" role="tab" id="tab-roman" aria-controls="slide-roman">ローマ字</button>
+        <button type="button" role="tab" id="tab-keys" aria-controls="slide-keys">キー</button>
+      </div>
+      <div class="track" data-track>
+        <div class="slide" data-slide id="slide-dict" role="tabpanel" aria-roledescription="slide" aria-labelledby="tab-dict">
+          <img src="screenshots/dictionaries.png" alt="設定アプリの辞書のページ" width="1278" height="728" loading="lazy">
+          <div class="cap"><h3>辞書</h3><p>辞書のファイルをウィンドウにドラッグして足し、チェックボックスで有効と無効を切りかえます。検索の順は、ドラッグか矢印のボタンで並べかえます。</p></div>
+        </div>
+        <div class="slide" data-slide id="slide-user" role="tabpanel" aria-roledescription="slide" aria-labelledby="tab-user">
+          <img src="screenshots/user-dictionary.png" alt="設定アプリのユーザー辞書のページ" width="1278" height="728" loading="lazy">
+          <div class="cap"><h3>ユーザー辞書</h3><p>見出し語を検索して、足したり消したりできます。候補の並べかえと、注釈の編集もここでします。編集は自動で保存されます。</p></div>
+        </div>
+        <div class="slide" data-slide id="slide-skkserv" role="tabpanel" aria-roledescription="slide" aria-labelledby="tab-skkserv">
+          <img src="screenshots/skkserv.png" alt="設定アプリの skkserv のページ" width="1278" height="728" loading="lazy">
+          <div class="cap"><h3>skkserv</h3><p>ホスト、ポート、文字コード（EUC-JP か UTF-8）を設定します。サーバーには、手元の辞書をすべて引いた後に問い合わせます。</p></div>
+        </div>
+        <div class="slide" data-slide id="slide-input" role="tabpanel" aria-roledescription="slide" aria-labelledby="tab-input">
+          <img src="screenshots/input.png" alt="設定アプリの入力のページ" width="1278" height="728" loading="lazy">
+          <div class="cap"><h3>入力</h3><p>句読点の種類、読みの補完（サジェスト）と表示する件数、候補の注釈の表示を切りかえます。</p></div>
+        </div>
+        <div class="slide" data-slide id="slide-roman" role="tabpanel" aria-roledescription="slide" aria-labelledby="tab-roman">
+          <img src="screenshots/roman.png" alt="設定アプリのローマ字のページ" width="1278" height="728" loading="lazy">
+          <div class="cap"><h3>ローマ字</h3><p>AZIK や ACT を選び、その上に自分の行を足します。ぶつかる行は、その場で理由がわかります。組み込みのルールも同じ画面で確かめられます。</p></div>
+        </div>
+        <div class="slide" data-slide id="slide-keys" role="tabpanel" aria-roledescription="slide" aria-labelledby="tab-keys">
+          <img src="screenshots/keys.png" alt="設定アプリのキーのページ" width="1278" height="728" loading="lazy">
+          <div class="cap"><h3>キー</h3><p>操作ごとに、keymap.conf の書き方でキーを変えます。横のボタンで既定に戻せます。変えたものだけを保存します。</p></div>
+        </div>
+      </div>
+      <div class="cnav">
+        <button type="button" data-prev aria-label="前のページ" aria-controls="slide-dict slide-user slide-skkserv slide-input slide-roman slide-keys">←</button>
+        <button type="button" data-next aria-label="次のページ" aria-controls="slide-dict slide-user slide-skkserv slide-input slide-roman slide-keys">→</button>
+        <span data-counter aria-hidden="true">1 / 6</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="why" aria-labelledby="why-h">
+    <h2 id="why-h"><small>なぜ SKK か</small>区切りを決めるのは、機械ではなく書く人です</h2>
+    <div class="cols">
+      <div class="narrow">
+        <p>多くの日本語入力は、打ったひらがなを文節に区切り、文脈から漢字を推測します。当たれば速い。外れれば、区切りを直し、候補を選びなおす。そのたびに、書いていた文から注意がそれます。</p>
+        <p>SKK は形態素解析をしません。漢字にしたいところを大文字で始め、送り仮名の始まりも大文字で示します。<code>KaKu</code> と打てば「書く」。どこからどこまでを、どう変換するかは、打った文字にすべて書いてあります。</p>
+        <p>だから、文脈で変換の結果が勝手に変わりません。同じように打てば、いつも同じ候補が出ます。</p>
+      </div>
+      <div class="narrow">
+        <p>辞書もユーザー辞書もテキストのファイルで、読んで、直して、足せます。作者も辞書を公開しています（<a href="https://github.com/tett23/SKK-JISYO.dainihonkokugojiten">SKK-JISYO.dainihonkokugojiten</a>、<a href="https://github.com/tett23/SKK-JISYO.emoji-ja">SKK-JISYO.emoji-ja</a>、<a href="https://github.com/tett23/SKK-JISYO.kaomoji">SKK-JISYO.kaomoji</a>、<a href="https://github.com/tett23/SKK-JISYO.mahjong-riichi">SKK-JISYO.mahjong-riichi</a>）。</p>
+        <p>そのうえで NablaSKK では、キーの割り当ても自分で決められます。</p>
+        <p>慣れるまでは手間があります。区切りを自分で決め、変換するところを大文字で始めることを、手が覚えるまで意識しなければなりません。それでも、言葉の切れ目を自分の手に戻すことには、その手間に見合う価値があると考えています。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="compare" aria-labelledby="compare-h">
+    <h2 id="compare-h"><small>AquaSKK との違い</small>同じ使い心地のまま、設定を画面で</h2>
+    <div class="table-wrap">
+    <table class="cmp">
+      <thead><tr><th scope="col">機能</th><th scope="col">NablaSKK</th><th scope="col">AquaSKK</th></tr></thead>
+      <tbody>
+        <tr class="group"><th colspan="3" scope="rowgroup">設定アプリ</th></tr>
+        <tr><th scope="row">ローマ字かなルールの追加と編集</th><td>「ローマ字」のページで行を足し、書きかえる。ぶつかる行は理由を示し、保存しない</td><td>「拡張設定」のタブで、用意された規則（AZIK など）を有効にする。行を足す欄はない</td></tr>
+        <tr><th scope="row">操作ごとのキーの変更</th><td>「キー」のページで操作ごとに変える。変えたものだけを <code>keymap.conf</code> に保存する</td><td>設定画面に項目がない</td></tr>
+        <tr><th scope="row">ユーザー辞書の編集</th><td>見出し語の検索、追加、削除。候補の並べかえと注釈の編集</td><td>設定画面に、中身を見たり書きかえたりする画面がない</td></tr>
+        <tr><th scope="row">画面の構成</th><td>サイドバーの 6 ページ。変更は自動で保存する</td><td>8 つのタブ（入力設定、拡張設定、補完、変換、辞書、互換性、その他、バージョン）</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="after">AquaSKK の列は、AquaSKK 4.7.3（2026 年 11 月の時点の最新の安定版）の設定アプリで確かめたことです。</p>
+    <p class="after">NablaSKK は、本家 AquaSKK の受け入れテスト（400 件）をすべて通っています。乗りかえても、打ち方は変わりません。</p>
+  </section>
+
+  <section id="install" aria-labelledby="install-h">
+    <h2 id="install-h"><small>インストール</small>入れ方</h2>
+    <div class="cols">
+      <div class="narrow">
+        <p>macOS 12 以降で動きます。リリースのアプリは Apple シリコンと Intel の両方で動くユニバーサル版です。</p>
+        <p>インストールのスクリプトが、最新のリリースを <code>~/Library/Input Methods</code> に入れます。</p>
+        <pre class="cmd"><code>curl -fsSL https://raw.githubusercontent.com/tett23/NablaSKK/main/install.sh | sh</code></pre>
+        <ol class="steps">
+          <li>一度ログアウトして、ログインしなおします。</li>
+          <li>「システム設定」→「キーボード」→「入力ソース」→「編集」→「+」で、「日本語」から NablaSKK を足します。</li>
+          <li>辞書は、メニューバーの入力メニューの「NablaSKK の設定...」で開く設定アプリで設定します。</li>
+        </ol>
+      </div>
+      <div class="narrow">
+        <p>ライセンスは GPL-2.0-or-later です。ソースからのビルドの手順、アンインストールの手順は、リポジトリの README にあります。</p>
+        <ul class="links">
+          <li><a href="https://github.com/tett23/NablaSKK">github.com/tett23/NablaSKK</a></li>
+          <li><a href="https://github.com/tett23/NablaSKK/releases">リリース</a></li>
+          <li><a href="https://github.com/codefirst/aquaskk">AquaSKK</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+<footer><div><span>NablaSKK · GPL-2.0-or-later</span><a href="../">tett23</a></div></footer>
+</body>
+</html>
