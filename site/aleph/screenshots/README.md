@@ -1,13 +1,13 @@
 # Aleph のスクリーンショット
 
-[ADR 0002](../../../docs/adr/0002-aleph-page.md) のカルーセルに使う、Aleph の 4 つの画面の画像。版は [ADR 0003](../../../docs/adr/0003-golem-page-with-golem-wasm-v0-1-0-rc4.md) で決めた。
+[ADR 0002](../../../docs/adr/0002-aleph-page.md) のカルーセルに使う、Aleph の 4 つの画面の画像。版は [ADR 0004](../../../docs/adr/0004-aleph-page-for-v1-0-0-rc3.md) で決めた。
 
 ## 撮り方
 
-- 版：Aleph v1.0.0-rc2。リリースの `Aleph-v1.0.0-rc2-aarch64-macos.zip` の `Aleph.app` で撮る。
+- 版：Aleph v1.0.0-rc3。リリースの `Aleph-v1.0.0-rc3-aarch64-macos.zip` の `Aleph.app` で撮る。
 - macOS をダークモードにし、Aleph の外観を「OS に合わせる」にする。
 - ウィンドウの大きさは 1280 × 800 ポイントにし、Retina の画面で撮る（2560 × 1600 画素）。
-  - 2026-11-09 に撮ったときは、等倍の外部ディスプレイ（DELL S2721QS）しかなかったので、1280 × 800 画素になった。Retina の画面で撮り直せば、[ADR 0002](../../../docs/adr/0002-aleph-page.md) のとおり 2560 × 1600 画素になる。
+  - 2026-11-09 に v1.0.0-rc3 で撮ったときは、等倍の外部ディスプレイ（DELL S2721QS）しかなかったので、1280 × 800 画素になった。Retina の画面で撮り直せば、[ADR 0002](../../../docs/adr/0002-aleph-page.md) のとおり 2560 × 1600 画素になる。
 - `screencapture -x -o -l <ウィンドウ ID>` で、ウィンドウだけを影なしで撮る。
 - 設定の「ページの解像度」を 300 dpi にする。ページのプレビューは、その設定で描いたものを撮る。
 
@@ -18,7 +18,7 @@
 | `plot.png` | プロット（シーンの表と、サブプロットごとのガントチャート） |
 | `settings.png` | 設定（「プレビュー」の項目。ページの解像度が 300 dpi） |
 
-## 2026-11-09 に撮った手順
+## 2026-11-09 に v1.0.0-rc3 で撮った手順
 
 - 手元のほかの Aleph の設定に触れないよう、`HOME` を空のディレクトリにして `Aleph.app/Contents/MacOS/aleph` を直接起動した。設定は `config.json` に、ワークスペースを見本のディレクトリだけ、`dpi` を 300、`theme` を `auto` と書き、`window.json` で大きさを決めた。
 - エディタ：ツリーで「一」（`chapters/01.gm`）を開き、ツールバーの「縦」を押した。

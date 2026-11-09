@@ -1,4 +1,4 @@
-// The Aleph page (ADR 0002, ADR 0003). The HTML of site/ is copied to _site/ as it is.
+// The Aleph page (ADR 0002, ADR 0003, ADR 0004). The HTML of site/ is copied to _site/ as it is.
 import { assert, assertEquals } from "../lib/assert.ts";
 
 const read = (p: string) => Deno.readTextFile(new URL(p, import.meta.url));
@@ -37,4 +37,20 @@ Deno.test("the install section has the xattr step", () => {
 
 Deno.test("the page links to the Golem page", () => {
   assert(html.includes('href="../golem/"'));
+});
+
+// ADR 0004: the page links to Aleph v1.0.0-rc3 and lists the build among the features.
+Deno.test("the release links are of v1.0.0-rc3, and no v1.0.0-rc2 is left", () => {
+  const tags = new Set([...html.matchAll(/tett23\/aleph\/releases\/(?:tag|download)\/([^/"]+)/g)].map((m) => m[1]));
+  assertEquals([...tags], ["v1.0.0-rc3"]);
+  assert(!html.includes("v1.0.0-rc2"), "v1.0.0-rc2 is left on the page");
+});
+
+Deno.test("the features are 13, with the build right after the page preview", () => {
+  const at = html.indexOf('class="feat"');
+  assert(at >= 0);
+  const list = html.slice(at, html.indexOf("</ul>", at));
+  const names = [...list.matchAll(/<li><h3>([^<]+)<\/h3>/g)].map((m) => m[1]);
+  assertEquals(names.length, 13);
+  assertEquals(names[names.indexOf("ページのプレビュー") + 1], "ビルド");
 });
