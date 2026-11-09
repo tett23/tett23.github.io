@@ -13,9 +13,19 @@ const styleRe = /<style\b[^>]*>([\s\S]*?)<\/style>/gi;
 
 const first = (m: RegExpMatchArray, from: number) => m.slice(from).find((x) => x !== undefined) ?? "";
 
+// A <link rel="alternate"> or <link rel="canonical"> names a page; it loads nothing (ADR 0001).
+const relRe = /\brel\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i;
+const isPageLink = (tag: string, attrs: string) => {
+  const rel = attrs.match(relRe);
+  return tag === "link" && rel !== null && /^(?:alternate|canonical)$/i.test(first(rel, 1).trim());
+};
+
 const htmlRefs = (html: string): Ref[] => [
   ...[...html.matchAll(tagRe)].flatMap((t) =>
-    [...t[2].matchAll(attrRe)].map((a) => ({ url: first(a, 1), tag: t[1].toLowerCase() }))
+    [...t[2].matchAll(attrRe)].map((a) => ({
+      url: first(a, 1),
+      tag: isPageLink(t[1].toLowerCase(), t[2]) ? "a" : t[1].toLowerCase(),
+    }))
   ),
   ...[...html.matchAll(styleRe)].flatMap((s) => cssRefs(s[1])),
 ];

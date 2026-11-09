@@ -1,5 +1,8 @@
-# name URL SHA-256 (ADR 0002). Fetched by scripts/fetch-assets.sh.
+# name URL SHA-256 [path in a tar.gz] (tett23/tett23 ADR 0002, ADR 0003). Fetched by scripts/fetch-assets.sh.
 nablaskk.wasm https://github.com/tett23/NablaSKK/releases/download/v1.3.0/nablaskk.wasm 3dc5295a980bd20caddb00182fdfdffeda19e590731f58d8e4e882631fab52bb
 SKK-JISYO.S https://github.com/tett23/NablaSKK/releases/download/v1.3.0/SKK-JISYO.S 9899d5a204bfd5e84d4bf3d52d52bcea724dadea7f5b416f2712a65411cb9285
 peg-hs.wasm https://github.com/tett23/peg-hs/releases/download/v0.1.0-rc5/peg-hs.wasm 8476f6fa952a1f7c57a2109960d55f8cc6887abd1db1b4afbe5605df333d4685
-shem.wasm https://github.com/tett23/shem/releases/download/v0.1.0-rc6/shem.wasm 597c4144bb66fb08f09a07e8fe47e6cd5b766dd3c82304aa6d880571730a8c9f
+shem.wasm https://github.com/tett23/shem/releases/download/v0.1.0-rc7/shem.wasm 5bb66fd1303e3c5247706609e1bc8ea20a2b483a73afac99211225ebdecbe364
+golem.wasm https://github.com/tett23/golem/releases/download/v0.1.0-rc4/golem-v0.1.0-rc4-wasm32-wasi.tar.gz 21410d6636997eeefd1d828966080af8e2aa54b16b455058e0065051e3bed8f8 golem-v0.1.0-rc4-wasm32-wasi/golem.wasm
+NotoSerifJP-Regular.otf https://raw.githubusercontent.com/tett23/golem/v0.1.0-rc4/modules/golem-driver/test/fixtures/kanikosen/fonts/NotoSerifJP-Regular.otf 2c9a12dbd4f2408c4610c7ee84a108b62d7236c3775baed618c64d9cb44b2f04
+LICENSE-NotoSerifJP.txt https://raw.githubusercontent.com/tett23/golem/v0.1.0-rc4/modules/golem-driver/test/fixtures/kanikosen/fonts/LICENSE-NotoSerifJP.txt 6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2

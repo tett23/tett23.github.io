@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aleph — 無限の可能性。自由に、本をつくろう。</title>
+<meta name="description" content="Aleph は、本と PDF をつくることに特化した執筆・組版環境です。">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../base.css">
+<link rel="stylesheet" href="style.css">
+<script type="module" src="main.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <nav aria-label="ページの中">
+    <a class="brand" href="./"><img src="icon.svg" alt="" width="28" height="28">Aleph</a>
+    <span class="links">
+      <a href="#screens">画面</a>
+      <a href="#features">機能</a>
+      <a href="#golem">Golem との関係</a>
+      <a href="#install">インストール</a>
+      <a href="../golem/">Golem</a>
+      <a href="https://github.com/tett23/aleph">GitHub</a>
+    </span>
+  </nav>
+
+  <main>
+  <section id="hero" class="hero" aria-labelledby="hero-h">
+    <img class="icon" src="icon.svg" alt="Aleph のアイコン。黒に近い角丸の四角に、白い明朝の ℵ" width="340" height="340">
+    <div>
+      <h1 id="hero-h">無限の可能性。<br><em>自由に</em>、本をつくろう。</h1>
+      <p class="lead">Aleph は、本と PDF をつくることに特化した執筆・組版環境です。縦書きの原稿を書き、Golem で組んだページを 300 dpi で確かめ、プロットと進み具合を一つの画面で扱えます。</p>
+      <div class="cta">
+        <a class="btn primary" href="https://github.com/tett23/aleph/releases/tag/v1.0.0-rc2">ダウンロード</a>
+        <a class="btn" href="https://github.com/tett23/aleph">GitHub</a>
+        <span class="req">macOS（Apple Silicon）・プレリリース</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="screens" aria-labelledby="screens-h">
+    <h2 id="screens-h"><small lang="en">SCREENS</small>書いて、組んで、確かめる</h2>
+    <p class="sub">原稿の編集から、ページの仕上がり、作品の設計まで。v1.0.0-rc2 のアプリで撮った画面です。</p>
+    <div class="carousel" data-carousel aria-roledescription="carousel" aria-labelledby="screens-h">
+      <div class="track" data-track>
+        <div class="slide" data-slide id="slide-editor" role="tabpanel" aria-roledescription="slide" aria-labelledby="tab-editor">
+          <img src="screenshots/editor.png" alt="エディタの画面。縦書きの『蟹工船』の原稿と、右のパネルの目標、キーワード、書くこと、ノート" width="1280" height="800" loading="lazy">
+          <div class="cap"><h3><span>01</span>エディタ</h3><p>縦書きと横書きを一つのエディタで。右のパネルに、シートの目標、キーワード、書くこと、ノートを置きます。</p></div>
+        </div>
+        <div class="slide" data-slide id="slide-preview" role="tabpanel" aria-roledescription="slide" aria-labelledby="tab-preview">
+          <img src="screenshots/preview.png" alt="ページのプレビューの画面。横書きのエディタの右に、300 dpi で描いた縦組みのページ" width="1280" height="800" loading="lazy">
+          <div class="cap"><h3><span>02</span>ページのプレビュー</h3><p>横書きのエディタの右に、Golem で組んだページを 300 dpi で描いて並べます。</p></div>
+        </div>
+        <div class="slide" data-slide id="slide-plot" role="tabpanel" aria-roledescription="slide" aria-labelledby="tab-plot">
+          <img src="screenshots/plot.png" alt="プロットの画面。シーンの表と、サブプロットごとのガントチャート" width="1280" height="800" loading="lazy">
+          <div class="cap"><h3><span>03</span>プロット</h3><p>シーンを表で書き、サブプロットごとの時間の流れをガントチャートで見渡します。</p></div>
+        </div>
+        <div class="slide" data-slide id="slide-settings" role="tabpanel" aria-roledescription="slide" aria-labelledby="tab-settings">
+          <img src="screenshots/settings.png" alt="設定の画面。左に一般、ワークスペース、エディタ、保存と Git、数え方、Golem と shem などの項目、右にプレビューの「ページの解像度」を 300 dpi にしたところ" width="1280" height="800" loading="lazy">
+          <div class="cap"><h3><span>04</span>設定</h3><p>外観、保存と Git、原稿用紙の換算、同梱の Golem と shem などを、一つの画面で設定します。ページの解像度は 300 dpi にしています。</p></div>
+        </div>
+      </div>
+      <div class="cnav">
+        <button type="button" data-prev aria-label="前の画面" aria-controls="slide-editor slide-preview slide-plot slide-settings">←</button>
+        <span data-counter aria-hidden="true">1 / 4</span>
+        <button type="button" data-next aria-label="次の画面" aria-controls="slide-editor slide-preview slide-plot slide-settings">→</button>
+      </div>
+      <div class="tabs" role="tablist" aria-label="画面">
+        <button type="button" role="tab" id="tab-editor" aria-controls="slide-editor"><img data-thumb src="screenshots/editor.png" alt="" width="1280" height="800" loading="lazy">エディタ</button>
+        <button type="button" role="tab" id="tab-preview" aria-controls="slide-preview"><img data-thumb src="screenshots/preview.png" alt="" width="1280" height="800" loading="lazy">ページのプレビュー</button>
+        <button type="button" role="tab" id="tab-plot" aria-controls="slide-plot"><img data-thumb src="screenshots/plot.png" alt="" width="1280" height="800" loading="lazy">プロット</button>
+        <button type="button" role="tab" id="tab-settings" aria-controls="slide-settings"><img data-thumb src="screenshots/settings.png" alt="" width="1280" height="800" loading="lazy">設定</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" aria-labelledby="features-h">
+    <h2 id="features-h"><small lang="en">FEATURES</small>本をつくるための機能</h2>
+    <ul class="feat">
+      <li><h3>縦書きと横書きのエディタ</h3><p>一つのエディタで、縦書きと横書きを切りかえて書きます。</p></li>
+      <li><h3>ページのプレビュー</h3><p>Golem で組んだ PDF を shem で描いて並べます。解像度は設定で決めるか、枠の幅と画面の倍率から自動で決めます。別のウィンドウにも出せます。</p></li>
+      <li><h3>本文のプレビュー</h3><p>Golem の HTML の出力で、見出し、ルビ、表を組んだ本文を読めます。</p></li>
+      <li><h3>診断と補完</h3><p><code>golem lsp</code> とつながり、誤りの診断、補完、ホバー、整形を使えます。</p></li>
+      <li><h3>改ページの見積もり</h3><p>原稿のどこでページが改まるかの見積もりを出します。</p></li>
+      <li><h3>プロットとガントチャート</h3><p>シーンを表で書き、サブプロットごとの時間の流れをガントチャートで見渡します。</p></li>
+      <li><h3>目標の字数と原稿用紙</h3><p>シートごとに目標の字数を立て、字数、ワード数、原稿用紙の枚数を数えます。</p></li>
+      <li><h3>書くこととノート</h3><p>シートの横に、書かなくてはいけないことのチェックと、ノートを置きます。</p></li>
+      <li><h3>保存と Git</h3><p>自動で保存し、1 日 1 回自動でコミットします。差分、コミット、push、pull も、アプリの中の Git のパネルで。</p></li>
+      <li><h3>ウィキリンクと検索</h3><p>シートをウィキリンクとキーワードで結び、ワークスペース全体を検索して置換します。</p></li>
+      <li><h3>共有ライブラリ</h3><p>フォント、Golem のプラグイン、関数を一か所に置き、プロジェクトをまたいで使います。</p></li>
+      <li><h3>いろいろな形式</h3><p>Markdown、CSV、TSV、TOML、JSON の仲間、SVG、Mermaid、PDF、画像も開けます。Markdown の原稿は <code>.gm</code> に変換できます。</p></li>
+    </ul>
+  </section>
+
+  <section id="golem" class="golem" aria-labelledby="golem-h">
+    <div>
+      <h2 id="golem-h"><small lang="en">POWERED BY GOLEM</small>組版は Golem に任せる</h2>
+      <p>Aleph のページのプレビューは、組版システム Golem が組んだ PDF そのものです。Golem と、PDF を画像に描く shem をアプリに同梱しているので、別に入れる必要はありません。v1.0.0-rc2 は golem v0.1.0-rc4 と shem v0.1.0-rc7 を同梱しています。</p>
+      <a class="more" href="../golem/">Golem について →</a>
+    </div>
+    <ol class="pipe" aria-label="ページのプレビューの流れ">
+      <li><b>原稿</b><span>.gm と style.toml</span></li>
+      <li><b>Golem</b><span>PDF に組む</span></li>
+      <li><b>shem</b><span>300 dpi で描く</span></li>
+    </ol>
+  </section>
+
+  <section id="install" aria-labelledby="install-h">
+    <h2 id="install-h"><small lang="en">INSTALL</small>インストール</h2>
+    <ol class="steps">
+      <li><a href="https://github.com/tett23/aleph/releases/download/v1.0.0-rc2/Aleph-v1.0.0-rc2-aarch64-macos.zip"><code>Aleph-v1.0.0-rc2-aarch64-macos.zip</code></a> と <a href="https://github.com/tett23/aleph/releases/download/v1.0.0-rc2/SHA256SUMS"><code>SHA256SUMS</code></a> をダウンロードし、照合します。
+<pre><code>shasum -a 256 --ignore-missing -c SHA256SUMS</code></pre></li>
+      <li>zip を展開し、<code>Aleph.app</code> を「アプリケーション」に移します。</li>
+      <li>Aleph は公証を受けていないので、ダウンロードしたままでは macOS が開くのを拒みます。一度だけ、次を実行します。
+<pre><code>xattr -dr com.apple.quarantine /Applications/Aleph.app</code></pre></li>
+    </ol>
+    <p class="note">配布物は Apple Silicon の Mac のためのものだけです。リリースノートは <a href="https://github.com/tett23/aleph/releases/tag/v1.0.0-rc2">v1.0.0-rc2 のリリース</a>にあります。</p>
+  </section>
+
+  <section class="closing" aria-labelledby="closing-h">
+    <img src="icon.svg" alt="" width="96" height="96">
+    <h2 id="closing-h">書きたい本を、最後まで。</h2>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/tett23/aleph/releases/tag/v1.0.0-rc2">ダウンロード</a>
+      <a class="btn" href="https://github.com/tett23/aleph">GitHub</a>
+    </div>
+  </section>
+  </main>
+
+  <footer><span>Aleph · MIT License · <a href="https://github.com/tett23">tett23</a></span><span>関連：<a href="../golem/">Golem</a>・<a href="https://github.com/tett23/shem">shem</a>・<a href="../peg-hs/">peg-hs</a></span></footer>
+</div>
+</body>
+</html>

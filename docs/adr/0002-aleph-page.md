@@ -1,6 +1,6 @@
 # ADR 0002: Aleph の紹介ページ
 
-ステータス: 採択（未実装）
+ステータス: 採択→取り込む版、wasm.lock のアーカイブの欄、WASI の検査、入力のファイル、見開きの組み方は [ADR 0003](0003-golem-page-with-golem-wasm-v0-1-0-rc4.md)
 
 ## 文脈
 

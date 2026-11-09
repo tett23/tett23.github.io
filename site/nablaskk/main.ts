@@ -1,6 +1,6 @@
 // The NablaSKK page: the 試す field and the settings app carousel.
 
-import { mountCarousel } from "./carousel.ts";
+import { mountCarousel } from "../lib/carousel.ts";
 import { type Engine, loadEngine, type RuleResult } from "./engine.ts";
 import { translate } from "./keys.ts";
 import { view } from "./view.ts";

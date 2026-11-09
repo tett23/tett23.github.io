@@ -1,4 +1,5 @@
-// The settings app carousel (ADR 0003): WAI-ARIA carousel with tabs.
+// A WAI-ARIA carousel with tabs, shared by the NablaSKK and the Aleph pages
+// (tett23/tett23 ADR 0003, ADR 0002).
 // No automatic rotation. Without scripts the slides scroll sideways.
 
 export type CarouselAction =
@@ -33,7 +34,7 @@ export const step = (index: number, count: number, a: CarouselAction): number =>
 export const tabAttributes = (index: number, count: number) =>
   Array.from({ length: count }, (_, i) => ({ selected: i === index, tabIndex: i === index ? 0 : -1 }));
 
-/** Wires a carousel rendered as in nablaskk/index.html. */
+/** Wires a carousel rendered as in nablaskk/index.html and aleph/index.html. */
 export const mountCarousel = (root: HTMLElement) => {
   const track = root.querySelector<HTMLElement>("[data-track]")!;
   const slides = [...root.querySelectorAll<HTMLElement>("[data-slide]")];

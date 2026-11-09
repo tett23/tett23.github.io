@@ -4,6 +4,8 @@ tett23 のプロダクトのページを置く GitHub Pages のユーザーサ�
 
 - https://tett23.github.io/ — 目次
 - https://tett23.github.io/nablaskk/ — NablaSKK（日本語）
+- https://tett23.github.io/golem/ — Golem（日本語）、https://tett23.github.io/golem/en/（英語）
+- https://tett23.github.io/aleph/ — Aleph（日本語）
 - https://tett23.github.io/peg-hs/ — peg-hs（英語）
 
 仕様は [docs/specifications.md](docs/specifications.md) にある。
@@ -33,4 +35,9 @@ deno run --allow-read scripts/check-site.ts _site
 
 ## License
 
-[MIT](LICENSE)。ただし、`site/nablaskk/AppIcon.svg` と `site/nablaskk/screenshots/` は NablaSKK のもので、GPL-2.0-or-later である。
+[MIT](LICENSE)。ただし、次のものは除く。
+
+- `site/nablaskk/AppIcon.svg` と `site/nablaskk/screenshots/` は NablaSKK のもので、GPL-2.0-or-later である。
+- `site/aleph/icon.svg` と `site/aleph/screenshots/` は Aleph のもので、MIT License である。
+- `site/golem/sample/kumo-no-ito.gm` は、青空文庫の「蜘蛛の糸」から作った。出どころは `site/golem/sample/README.md` にある。
+- `site/wasm.lock` で取り込むフォント（Noto Serif JP のサブセット）は SIL Open Font License 1.1 で、ライセンスはサイトの `assets/LICENSE-NotoSerifJP.txt` に置く。
