@@ -1,4 +1,4 @@
-// The two Golem pages (ADR 0001, ADR 0003). The HTML of site/ is copied to _site/ as it is.
+// The two Golem pages (ADR 0001, ADR 0003, ADR 0005). The HTML of site/ is copied to _site/ as it is.
 import { assert, assertEquals } from "../lib/assert.ts";
 import { readLock } from "../lib/lock.ts";
 
@@ -90,4 +90,14 @@ Deno.test("the sample has no geta mark and its README says where it comes from",
 Deno.test("kumo-no-ito.gm ends with the base text, the inputter and the proofreader", async () => {
   const tail = (await read("./sample/kumo-no-ito.gm")).split("# 底本と作成者")[1] ?? "";
   for (const s of ["底本：", "入力：平山誠、野口英司", "校正：もりみつじゅんじ"]) assert(tail.includes(s), s);
+});
+
+// ADR 0005: the peg-hs card names the parsers of .gm and of Emet.
+Deno.test("the peg-hs card names the parsers of .gm and of Emet", () => {
+  for (const [html, href] of [[ja, "../peg-hs/"], [en, "../../peg-hs/"]]) {
+    const card = html.match(new RegExp(`<a href="${href}">[\\s\\S]*?</a>`))?.[0] ?? "";
+    const desc = card.match(/<span class="desc">([\s\S]*?)<\/span>/)?.[1] ?? "";
+    assert(desc.includes("<code>.gm</code>"), `${href}: no .gm`);
+    assert(desc.includes("Emet"), `${href}: no Emet`);
+  }
 });
