@@ -37,3 +37,11 @@ Deno.test("only the shown slide's tab is selected and focusable", () => {
     { selected: false, tabIndex: -1 },
   ]);
 });
+
+Deno.test("the four screens of the Aleph page: tabs, buttons and arrow keys select one tab (ADR 0002)", () => {
+  const selected = (i: number) => tabAttributes(i, 4).findIndex((a) => a.selected);
+  assertEquals(selected(run(4, [{ type: "go", index: 2 }])), 2);
+  assertEquals(selected(run(4, [{ type: "next" }, { type: "next" }, { type: "next" }, { type: "next" }])), 3);
+  assertEquals(selected(run(4, [{ type: "key", key: "ArrowLeft" }], 3)), 2);
+  assertEquals(tabAttributes(1, 4).filter((a) => a.selected).length, 1);
+});
