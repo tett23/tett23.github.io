@@ -166,7 +166,7 @@ h2 {
 /* The playground. */
 .play {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
   border: 1px solid var(--ink);
   padding: 0;
   margin-bottom: 72px;
@@ -350,12 +350,12 @@ h2 {
   position: relative;
   display: flex;
   justify-content: center;
-  padding: 28px 20px;
+  padding: 20px 16px;
   min-height: 520px;
 }
 
 .spread canvas {
-  width: min(300px, 46%);
+  width: 50%;
   height: auto;
   aspect-ratio: 1512 / 2150;
   background: var(--paper);
