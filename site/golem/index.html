@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Golem — 組版をソフトウェアに</title>
+<meta name="description" content="Golem は、コマンドラインと CI で動く組版システムです。同じ入力からは、どのコンピューターでも同じバイト列の PDF が出ます。">
+<link rel="alternate" hreflang="ja" href="https://tett23.github.io/golem/">
+<link rel="alternate" hreflang="en" href="https://tett23.github.io/golem/en/">
+<link rel="stylesheet" href="../base.css">
+<link rel="stylesheet" href="style.css">
+<script type="module" src="main.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <nav aria-label="ページの中">
+    <a class="brand" href="./">Golem</a>
+    <span class="links">
+      <a href="#play">試す</a>
+      <a href="#principles">原則</a>
+      <a href="#extend">拡張</a>
+      <a href="#manuals">マニュアル</a>
+      <a href="#related">関連</a>
+      <a href="#install">インストール</a>
+      <a href="https://github.com/tett23/golem">GitHub</a>
+      <a class="lang" href="en/" hreflang="en" lang="en">English</a>
+    </span>
+  </nav>
+
+  <main>
+  <section id="top" class="top" aria-labelledby="top-h">
+    <div class="intro">
+      <h1 id="top-h" lang="en">Typesetting,<br><i>as software.</i></h1>
+      <p class="lede">Golem は、コマンドラインと CI で動く組版システムです。本をテキストのファイルで書くと、PDF、EPUB、HTML、テキストを組みます。同じ入力からは、どのコンピューターでも同じバイト列の PDF が出ます。</p>
+      <div class="facts">
+        <div><b>原稿はテキスト</b>差分、レビュー、CI</div>
+        <div><b>出力は同じバイト列</b>PDF も差分で確かめる</div>
+        <div><b>日本語組版を内蔵</b>縦組み、ルビ、圏点</div>
+      </div>
+      <div class="cta">
+        <pre><code>golem new mybook --language ja</code></pre>
+        <a href="#install">インストール</a>
+        <a href="https://github.com/tett23/golem/releases/download/v0.1.0-rc4/golem-manual-v0.1.0-rc4.pdf">マニュアル（PDF）</a>
+        <a href="https://github.com/tett23/golem/releases/download/v0.1.0-rc4/golem-dev-manual-v0.1.0-rc4.pdf">開発者のマニュアル（PDF）</a>
+      </div>
+    </div>
+    <p class="motto">組版を<br><span>ソフトウェア</span>に</p>
+  </section>
+
+  <section id="play" class="play" aria-labelledby="play-h" data-playground>
+    <h2 id="play-h" class="visually-hidden">試す</h2>
+    <div class="src">
+      <div class="tabs" role="tablist" aria-label="原稿のファイル">
+        <button role="tab" id="tab-gm" aria-controls="panel-gm" aria-selected="true" data-file="kumo-no-ito.gm">kumo-no-ito.gm</button>
+        <button role="tab" id="tab-style" aria-controls="panel-style" aria-selected="false" tabindex="-1" data-file="style.toml">style.toml</button>
+      </div>
+      <div class="diags" data-diagnostics aria-live="polite"></div>
+      <div class="editor" id="panel-gm" role="tabpanel" aria-labelledby="tab-gm">
+        <pre class="hl" aria-hidden="true" data-highlight="kumo-no-ito.gm"></pre>
+        <textarea data-editor="kumo-no-ito.gm" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="kumo-no-ito.gm の原稿" lang="ja"></textarea>
+      </div>
+      <div class="editor" id="panel-style" role="tabpanel" aria-labelledby="tab-style" hidden>
+        <pre class="hl" aria-hidden="true" data-highlight="style.toml"></pre>
+        <textarea data-editor="style.toml" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="style.toml"></textarea>
+      </div>
+      <p class="foot">原稿か <code>style.toml</code> を書きかえると、ブラウザの中で組み直します。原稿はどこにも送りません。<a href="sample/manifest.toml"><code>manifest.toml</code></a> は固定です。</p>
+    </div>
+    <div class="view">
+      <div class="bar">
+        <span data-page-label aria-live="polite">—</span>
+        <span class="buttons">
+          <button type="button" data-next aria-label="次の見開き" disabled>←</button>
+          <button type="button" data-prev aria-label="前の見開き" disabled>→</button>
+          <button type="button" data-download disabled>PDF をダウンロード</button>
+        </span>
+      </div>
+      <div class="spread" data-spread>
+        <canvas data-page="left" role="img" aria-label=""></canvas>
+        <canvas data-page="right" role="img" aria-label=""></canvas>
+        <p class="status" data-status>スクリプトを有効にすると、ここで組版の結果を見られます。</p>
+      </div>
+      <div class="meta">
+        <span>芥川龍之介「蜘蛛の糸」（青空文庫）より。底本と入力者、校正者は原稿の末尾にあります。</span>
+        <span><span data-timing></span> ・ shem で 300 dpi にラスタライズ</span>
+      </div>
+      <p class="credits">組版は <a href="https://github.com/tett23/golem/releases/tag/v0.1.0-rc4">Golem v0.1.0-rc4</a> の <code>golem.wasm</code>（ライセンスと GNU MP のソースはリリースにあります）、ラスタライズは <a href="https://github.com/tett23/shem/releases/tag/v0.1.0-rc7">shem v0.1.0-rc7</a> の <code>shem.wasm</code>、フォントは Noto Serif JP のサブセット（<a href="../assets/LICENSE-NotoSerifJP.txt">SIL Open Font License 1.1</a>）です。</p>
+    </div>
+  </section>
+
+  <section id="principles" class="how" aria-labelledby="principles-h">
+    <h2 id="principles-h">組版を、どうソフトウェアにするか</h2>
+    <p class="lead">本を作る現場では、原稿は Word に、紙面は InDesign に、赤字は PDF に分かれています。三つの写しのあいだで変更を移すのも、赤字が反映されたかをゲラで確かめるのも、人の手と目です。どれだけ注意深く働いても、この形のままでは見落としを防げません。</p>
+    <p class="lead">ソフトウェアの開発は、同じ問題を人の注意ではなく仕組みで解いてきました。正本を一つにして変更を残らず記録し、変更のたびに自動で組み立てて検査し、前と違う結果だけを人が確かめる。Golem はこのやり方を組版に持ち込みます。支えるのは次の四つの原則で、どれも前の原則があって初めて働きます。</p>
+    <ol class="pillars">
+      <li class="pillar">
+        <div class="no">01<small>土台</small></div>
+        <div>
+          <h3>決定性<span>同じ入力から、一バイトも違わない出力</span></h3>
+          <p>組み上がりを左右する原稿、設定、フォントを、すべてプロジェクトのフォルダに閉じ込めます。Golem はコンピューターに入っているフォントを探しません。同じバージョンの Golem は、どのコンピューターでも中身が一バイトも違わない PDF を作ります。だから出力が変わったら、原因は必ず入力の側にあります。</p>
+        </div>
+        <div class="tools">
+          <h4 lang="en">Tools</h4>
+          <ul><li><code>golem build</code>プロジェクトの中のファイルだけから組む</li></ul>
+          <p class="proof">Golem の CI は、x86-64 と aarch64 で同じ原稿を組み、出力のバイト列が一致することを変更のたびに確かめています。保証は PDF、HTML、テキストで、EPUB はまだです。</p>
+        </div>
+      </li>
+      <li class="pillar">
+        <div class="no">02<small>01 があるから</small></div>
+        <div>
+          <h3>バージョン管理<span>正本は一つ、変更はすべて履歴に</span></h3>
+          <p>原稿は <code>.gm</code>、体裁の規則は <code>style.toml</code> のテキストです。Git に入れれば、どの行をいつ誰が変えたかが残り、取り込む前に差分で相談できます。PDF はいつでも同じものを組み直せるので、記録するのは原稿と設定だけで足ります。担当者の頭の中にあった組版の規則も、読み返せる履歴になります。</p>
+        </div>
+        <div class="tools">
+          <h4 lang="en">Tools</h4>
+          <ul><li><code>git</code>原稿、style.toml、フォントの履歴</li><li><code>golem fmt</code>原稿の書き方の揺れをそろえる</li></ul>
+        </div>
+      </li>
+      <li class="pillar">
+        <div class="no">03<small>02 があるから</small></div>
+        <div>
+          <h3>CI<span>変更が届くたびに、組んで検査する</span></h3>
+          <p>原稿の置き場所に変更が届くたびに、自動で本を組み、入稿の前の検査（プリフライト）を走らせます。組めなくなった変更や、印刷所の条件に合わなくなった変更は、その回のうちに見つかります。ライセンスの認証がなく、Linux 版は静的にリンクした一つの実行ファイルなので、CI のコンピューターにそのまま置けます。</p>
+        </div>
+        <div class="tools">
+          <h4 lang="en">Tools</h4>
+          <ul><li><code>golem check</code>出力を書かずに検査する</li><li><code>golem lint</code>lint の規則で原稿を検査する</li><li><code>golem preflight</code>入稿の前の検査</li><li><code>golem build --profile prod</code>入稿する PDF を作る</li></ul>
+        </div>
+      </li>
+      <li class="pillar">
+        <div class="no">04<small>01 と 03 があるから</small></div>
+        <div>
+          <h3>見た目の回帰テスト<span>変わったページだけを、人が見る</span></h3>
+          <p>前に組んだ PDF と新しく組んだ PDF を、ページごとに画像にして比べます。決定性があるので、原稿を変えていないページは画像も同じです。違いが出るのは変更が及んだページだけで、数百ページの本でも、人が確かめるのはそのページだけで済みます。</p>
+        </div>
+        <div class="tools">
+          <h4 lang="en">Tools</h4>
+          <ul><li><code>shem</code>PDF のページを PNG に描く</li></ul>
+          <p class="proof">Golem 自身の見た目の回帰テストも shem で行っています。ページの画像を比べる機能は Golem には入っておらず、外部のツールで行います。</p>
+        </div>
+      </li>
+    </ol>
+    <div class="loop">
+      <ol>
+        <li class="human"><em>人</em><b>原稿を直す</b>.gm と style.toml</li>
+        <li><em>01・02</em><b>履歴に残す</b>git commit</li>
+        <li><em>03</em><b>組んで検査する</b>check・lint・preflight・build</li>
+        <li><em>04</em><b>前の版と比べる</b>shem でページを画像に</li>
+        <li class="human"><em>人</em><b>変わったページを確かめる</b>直すなら最初へ</li>
+      </ol>
+      <p>一周するあいだに人の手が要るのは、黒い二か所だけです。写しのあいだで変更を移す作業も、ゲラを全ページ見比べる作業も、この輪の中にはありません。四つのどれが欠けても、輪は閉じません。</p>
+    </div>
+    <div class="gone">
+      <h3>これらは、もう必要ありません</h3>
+      <ul>
+        <li>Word、InDesign、PDF の写しのあいだで、変更を手で移すこと<span>02 バージョン管理</span></li>
+        <li>ファイル名に final と付けて、どれが最新かを区別すること<span>02 バージョン管理</span></li>
+        <li>組版の規則を、担当者の頭の中にだけ置いておくこと<span>02 バージョン管理</span></li>
+        <li>フォントを更新して動いた折り返しの、原因を探すこと<span>01 決定性</span></li>
+        <li>ライセンスの入った一台が空くのを、皆で待つこと<span>03 CI</span></li>
+        <li>初校と再校のゲラを並べて、赤字の反映を一行ずつ目で追うこと<span>04 見た目の回帰テスト</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="extend" aria-labelledby="extend-h">
+    <h2 id="extend-h">プラグインと関数で拡張する</h2>
+    <div class="ext">
+      <div>
+        <h3>プラグイン<small>.wasm</small></h3>
+        <p>組み込みのコマンドで足りないときは、プラグインを足します。プラグインは WebAssembly のファイルで、Golem はプラグインにファイル、ネットワーク、時計、乱数を渡しません。だから、プラグインを使っても同じバイト列に組めます。</p>
+        <ul>
+          <li><b>コマンド</b>段落の中で <code>[furigana: ...]</code> のように呼ぶ</li>
+          <li><b>ブロックコマンド</b><code>@tsv-table sales</code> のように呼び、表やブロックを返す</li>
+          <li><b>フィルタ</b>原稿のファイル一つ分を受け取り、書きかえて返す</li>
+          <li><b>一覧</b>本文の各所から集めて、用語集や人名索引を作る</li>
+        </ul>
+<pre><code><span class="c"># manifest.toml</span>
+<span class="k">[plugins.furigana]</span>
+url = "https://example.com/furigana/v1.0.0/furigana.wasm"
+
+<span class="c">$</span> golem plugin lock   <span class="c"># ハッシュを plugins.lock に書く</span></code></pre>
+      </div>
+      <div>
+        <h3>関数<small>.emet</small></h3>
+        <p>その本だけの小さな計算や書式は、関数を書く言語 Emet で関数にして、原稿から呼びます。関数が読めるファイルは、マニフェストの <code>[functions.requires]</code> で許したものだけです。</p>
+<pre><code><span class="c">-- fn/numbers.emet</span>
+<span class="k">pub inline</span> yen :: Nat -&gt; Inlines
+yen n = Inline.text (commas n ++ "円")
+
+<span class="c">-- numbers.gm</span>
+@import fn/numbers.emet as n
+総額は[n.yen 1234567]です。
+<span class="c">→ 総額は1,234,567円です。</span></code></pre>
+        <p class="note">Emet は Golem の 1.x のあいだ実験的な機能で、二つ目の数が上がったバージョンで書き方が変わることがあります。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="compare" aria-labelledby="compare-h">
+    <h2 id="compare-h">TeX、InDesign との比較</h2>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th scope="col"><span class="visually-hidden">項目</span></th><th scope="col">Golem</th><th scope="col">TeX</th><th scope="col">InDesign</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">原稿</th><td>テキスト、テキストを置き換えるマクロはない</td><td>テキストとマクロ</td><td>画面の上で重ねた操作の結果のドキュメント</td></tr>
+          <tr><th scope="row">誤りの位置</th><td>常に原稿のファイル、行、番号</td><td>マクロを展開した後の誤りは、原稿の位置を失いやすい</td><td>—</td></tr>
+          <tr><th scope="row">スタイル</th><td><code>style.toml</code> のデータ</td><td>マクロ（プログラム）</td><td>段落スタイル。考え方は Golem とよく似ている</td></tr>
+          <tr><th scope="row">出力の再現性</th><td>同じ入力から同じバイト列（PDF、HTML、テキスト）</td><td>—</td><td>—</td></tr>
+          <tr><th scope="row">日本語組版</th><td>JLReq に従う規則が組み込み</td><td>パッケージを選んで組み合わせる</td><td>組み込み</td></tr>
+          <tr><th scope="row">CI での実行</th><td>ライセンスの認証がなく、そのまま動く</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">「—」は、Golem のマニュアルの「はじめに」で比べていない項目です。数式の組版は、今の Golem にはありません。画面の上で紙面を見ながら組むこと、自由な位置にフレームを置くレイアウト、特色も、今の Golem にはできません。</p>
+  </section>
+
+  <section id="manuals" aria-labelledby="manuals-h">
+    <h2 id="manuals-h">Golem で組んだ 2 冊のマニュアル</h2>
+    <div class="manuals">
+      <div class="manual">
+        <div class="cover">Golem マニュアル<i lang="en">USER</i></div>
+        <div>
+          <h3>Golem マニュアル</h3>
+          <p>本を作る人へ。最初の 1 冊を組むところから、記法、マニフェスト、スタイル、出力、検査、Git と CI、エディタ、プラグインまで。付録に設定とエラーの番号、Emet があります。</p>
+          <p class="fmt"><a class="pdf" href="https://github.com/tett23/golem/releases/download/v0.1.0-rc4/golem-manual-v0.1.0-rc4.pdf">PDF</a><a href="https://github.com/tett23/golem/releases/download/v0.1.0-rc4/golem-manual-v0.1.0-rc4-html.tar.gz">HTML（tar.gz）</a></p>
+        </div>
+      </div>
+      <div class="manual">
+        <div class="cover dev">Golem 開発者のマニュアル<i lang="en">DEV</i></div>
+        <div>
+          <h3>開発者のマニュアル</h3>
+          <p>Golem で仕組みを作る人と、Golem を開発する人へ。コマンドと diagnostics、CI、LSP、プラグインの書き方、IR、モジュール、Emet、決定性、リリース。</p>
+          <p class="fmt"><a class="pdf" href="https://github.com/tett23/golem/releases/download/v0.1.0-rc4/golem-dev-manual-v0.1.0-rc4.pdf">PDF</a><a href="https://github.com/tett23/golem/releases/download/v0.1.0-rc4/golem-dev-manual-v0.1.0-rc4-html.tar.gz">HTML（tar.gz）</a></p>
+        </div>
+      </div>
+    </div>
+    <p class="note">どちらも Golem v0.1.0-rc4 で組んだもので、リリースに添付されています。</p>
+  </section>
+
+  <section id="related" aria-labelledby="related-h">
+    <h2 id="related-h">関連プロジェクト</h2>
+    <div class="rel">
+      <a href="../aleph/"><span class="role" lang="en">Editor</span><span class="name">Aleph</span><span class="desc">Golem の原稿を書くためのデスクトップアプリ。縦書きと横書きの編集、書きながらのページのプレビュー、プロット、Git。</span><span class="go">Aleph のページ →</span></a>
+      <a href="https://github.com/tett23/shem"><span class="role" lang="en">Rasterizer</span><span class="name">shem</span><span class="desc">Golem の PDF のページを PNG に描きます。Golem の見た目の回帰テストと、このページのプレビューに使っています。</span><span class="go">GitHub →</span></a>
+      <a href="../peg-hs/"><span class="role" lang="en">Parser generator</span><span class="name">peg-hs</span><span class="desc">PEG の文法から Haskell のパーサを生成します。Golem の <code>.gm</code> のパーサは peg-hs で生成しています。</span><span class="go">peg-hs のページ →</span></a>
+    </div>
+  </section>
+
+  <section id="install" aria-labelledby="install-h">
+    <h2 id="install-h">インストール</h2>
+    <p class="lead">リリースから、プラットフォームに合うアーカイブと <code>SHA256SUMS</code> を取得し、照合してから展開します。Linux（x86-64、aarch64）と macOS（Apple Silicon）の配布物があり、Windows では WSL2 の上で Linux の配布物を使います。</p>
+<pre class="shell"><code>TAG=v0.1.0-rc4
+curl -LO "https://github.com/tett23/golem/releases/download/$TAG/golem-$TAG-aarch64-macos.tar.gz"
+curl -LO "https://github.com/tett23/golem/releases/download/$TAG/SHA256SUMS"
+shasum -a 256 --ignore-missing -c SHA256SUMS
+tar -xzf "golem-$TAG-aarch64-macos.tar.gz"
+install -m 755 "golem-$TAG-aarch64-macos/golem" "$HOME/.local/bin/golem"
+golem new mybook --language ja</code></pre>
+    <p class="note">Linux では、アーカイブの名前を <code>x86_64-linux</code> か <code>aarch64-linux</code> にし、<code>sha256sum --ignore-missing -c SHA256SUMS</code> で照合します。macOS の実行ファイルは公証を受けていないので、ブラウザで取得したときは <code>xattr -d com.apple.quarantine golem</code> で属性を外します。</p>
+    <ul class="links">
+      <li><a href="https://github.com/tett23/golem/releases/tag/v0.1.0-rc4">Golem v0.1.0-rc4 のリリース</a></li>
+      <li><a href="https://github.com/tett23/golem">リポジトリ</a></li>
+    </ul>
+  </section>
+  </main>
+
+  <footer>Golem · MIT License · <a href="https://github.com/tett23">tett23</a> · <a href="../">ほかのプロダクト</a></footer>
+</div>
+</body>
+</html>

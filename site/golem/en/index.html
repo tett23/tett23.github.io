@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Golem — Typesetting, as software.</title>
+<meta name="description" content="Golem is a typesetting system that runs on the command line and in CI. The same input gives the same bytes of PDF on every computer.">
+<link rel="alternate" hreflang="ja" href="https://tett23.github.io/golem/">
+<link rel="alternate" hreflang="en" href="https://tett23.github.io/golem/en/">
+<link rel="stylesheet" href="../../base.css">
+<link rel="stylesheet" href="../style.css">
+<script type="module" src="../main.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <nav aria-label="On this page">
+    <a class="brand" href="./">Golem</a>
+    <span class="links">
+      <a href="#play">Try</a>
+      <a href="#principles">Principles</a>
+      <a href="#extend">Extend</a>
+      <a href="#manuals">Manuals</a>
+      <a href="#related">Related</a>
+      <a href="#install">Install</a>
+      <a href="https://github.com/tett23/golem">GitHub</a>
+      <a class="lang" href="../" hreflang="ja" lang="ja">日本語</a>
+    </span>
+  </nav>
+
+  <main>
+  <section id="top" class="top" aria-labelledby="top-h">
+    <div class="intro">
+      <h1 id="top-h">Typesetting,<br><i>as software.</i></h1>
+      <p class="lede">Golem is a typesetting system that runs on the command line and in CI. Write a book as text files, and it typesets PDF, EPUB, HTML and plain text. The same input gives the same bytes of PDF on every computer.</p>
+      <div class="facts">
+        <div><b>The manuscript is text</b>diffs, reviews, CI</div>
+        <div><b>The output is the same bytes</b>check the PDF by its diff too</div>
+        <div><b>Japanese typesetting built in</b>vertical text, ruby, emphasis dots</div>
+      </div>
+      <div class="cta">
+        <pre><code>golem new mybook --language en</code></pre>
+        <a href="#install">Install</a>
+        <a href="https://github.com/tett23/golem/releases/download/v0.1.0-rc4/golem-manual-v0.1.0-rc4.pdf">User manual (PDF, Japanese)</a>
+        <a href="https://github.com/tett23/golem/releases/download/v0.1.0-rc4/golem-dev-manual-v0.1.0-rc4.pdf">Developer manual (PDF, Japanese)</a>
+      </div>
+    </div>
+    <p class="motto" lang="ja">組版を<br><span>ソフトウェア</span>に</p>
+  </section>
+
+  <section id="play" class="play" aria-labelledby="play-h" data-playground>
+    <h2 id="play-h" class="visually-hidden">Try it</h2>
+    <div class="src">
+      <div class="tabs" role="tablist" aria-label="Source files">
+        <button role="tab" id="tab-gm" aria-controls="panel-gm" aria-selected="true" data-file="kumo-no-ito.gm">kumo-no-ito.gm</button>
+        <button role="tab" id="tab-style" aria-controls="panel-style" aria-selected="false" tabindex="-1" data-file="style.toml">style.toml</button>
+      </div>
+      <div class="diags" data-diagnostics aria-live="polite"></div>
+      <div class="editor" id="panel-gm" role="tabpanel" aria-labelledby="tab-gm">
+        <pre class="hl" aria-hidden="true" data-highlight="kumo-no-ito.gm" lang="ja"></pre>
+        <textarea data-editor="kumo-no-ito.gm" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="The manuscript kumo-no-ito.gm" lang="ja"></textarea>
+      </div>
+      <div class="editor" id="panel-style" role="tabpanel" aria-labelledby="tab-style" hidden>
+        <pre class="hl" aria-hidden="true" data-highlight="style.toml"></pre>
+        <textarea data-editor="style.toml" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="style.toml"></textarea>
+      </div>
+      <p class="foot">Edit the manuscript or <code>style.toml</code>, and it typesets again in your browser. Nothing is sent anywhere. <a href="../sample/manifest.toml"><code>manifest.toml</code></a> is fixed.</p>
+    </div>
+    <div class="view">
+      <div class="bar">
+        <span data-page-label aria-live="polite">—</span>
+        <span class="buttons">
+          <button type="button" data-next aria-label="Next spread" disabled>←</button>
+          <button type="button" data-prev aria-label="Previous spread" disabled>→</button>
+          <button type="button" data-download disabled>Download the PDF</button>
+        </span>
+      </div>
+      <div class="spread" data-spread>
+        <canvas data-page="left" role="img" aria-label=""></canvas>
+        <canvas data-page="right" role="img" aria-label=""></canvas>
+        <p class="status" data-status>Turn on scripts to see the typeset pages here.</p>
+      </div>
+      <div class="meta">
+        <span>From <span lang="ja">芥川龍之介「蜘蛛の糸」</span> (The Spider's Thread, by Akutagawa Ryūnosuke), Aozora Bunko. The base text, the inputter and the proofreader are at the end of the manuscript.</span>
+        <span><span data-timing></span> · rasterized by shem at 300 dpi</span>
+      </div>
+      <p class="credits">Typeset by <code>golem.wasm</code> of <a href="https://github.com/tett23/golem/releases/tag/v0.1.0-rc4">Golem v0.1.0-rc4</a> (its licenses and the source of GNU MP are on the release), rasterized by <code>shem.wasm</code> of <a href="https://github.com/tett23/shem/releases/tag/v0.1.0-rc7">shem v0.1.0-rc7</a>, in a subset of Noto Serif JP (<a href="../../assets/LICENSE-NotoSerifJP.txt">SIL Open Font License 1.1</a>).</p>
+    </div>
+  </section>
+
+  <section id="principles" class="how" aria-labelledby="principles-h">
+    <h2 id="principles-h">How Golem makes typesetting software</h2>
+    <p class="lead">Where books are made, the manuscript is in Word, the pages are in InDesign and the corrections are in a PDF. Moving each change between the three copies, and checking on the proofs that each correction was made, is left to human hands and eyes. However careful people are, this arrangement cannot stop things from being missed.</p>
+    <p class="lead">Software development has solved the same problem with mechanisms rather than attention: one master copy with every change recorded, an automatic build and check for every change, and people looking only at results that differ from before. Golem brings this way of working to typesetting. Four principles hold it up, and each works only because of the one before.</p>
+    <ol class="pillars">
+      <li class="pillar">
+        <div class="no">01<small>the ground</small></div>
+        <div>
+          <h3>Determinism<span>From the same input, output that does not differ by a byte</span></h3>
+          <p>The manuscript, the settings and the fonts that decide the result are all kept in the folder of the project. Golem does not look for the fonts installed on the computer. The same version of Golem makes a PDF that does not differ by a single byte on any computer. So when the output changes, the cause is always in the input.</p>
+        </div>
+        <div class="tools">
+          <h4>Tools</h4>
+          <ul><li><code>golem build</code>typesets from the files in the project only</li></ul>
+          <p class="proof">Golem's CI typesets the same manuscripts on x86-64 and aarch64 and checks, for every change, that the bytes of the output match. This is guaranteed for PDF, HTML and plain text; not yet for EPUB.</p>
+        </div>
+      </li>
+      <li class="pillar">
+        <div class="no">02<small>because of 01</small></div>
+        <div>
+          <h3>Version control<span>One master copy; every change in the history</span></h3>
+          <p>The manuscript is <code>.gm</code> text, and the rules of the design are <code>style.toml</code> text. Put them in Git, and it records which line was changed, when and by whom, and changes can be discussed as diffs before they go in. Since the same PDF can be typeset again at any time, recording the manuscript and the settings is enough. The rules of typesetting that lived only in someone's head become a history that anyone can read.</p>
+        </div>
+        <div class="tools">
+          <h4>Tools</h4>
+          <ul><li><code>git</code>the history of the manuscript, style.toml and the fonts</li><li><code>golem fmt</code>makes the writing of the manuscript uniform</li></ul>
+        </div>
+      </li>
+      <li class="pillar">
+        <div class="no">03<small>because of 02</small></div>
+        <div>
+          <h3>CI<span>Typeset and check every change as it arrives</span></h3>
+          <p>Every time a change arrives where the manuscript is kept, the book is typeset automatically and the checks before printing (preflight) are run. A change that no longer builds, or that no longer meets the printer's conditions, is found in that same run. There is no license activation, and the Linux build is a single statically linked executable, so it goes onto a CI machine as it is.</p>
+        </div>
+        <div class="tools">
+          <h4>Tools</h4>
+          <ul><li><code>golem check</code>checks without writing the output</li><li><code>golem lint</code>applies the lint rules to the manuscript</li><li><code>golem preflight</code>the checks before printing</li><li><code>golem build --profile prod</code>the PDF for the printer</li></ul>
+        </div>
+      </li>
+      <li class="pillar">
+        <div class="no">04<small>because of 01 and 03</small></div>
+        <div>
+          <h3>Visual regression tests<span>People look only at the pages that changed</span></h3>
+          <p>The PDF typeset before and the PDF typeset now are turned into images page by page and compared. Because of determinism, a page whose manuscript did not change gives the same image. Only the pages a change reached differ, so even in a book of hundreds of pages, people check only those pages.</p>
+        </div>
+        <div class="tools">
+          <h4>Tools</h4>
+          <ul><li><code>shem</code>draws the pages of a PDF as PNG</li></ul>
+          <p class="proof">Golem's own visual regression tests use shem. Comparing the images of pages is not part of Golem; it is done by an external tool.</p>
+        </div>
+      </li>
+    </ol>
+    <div class="loop">
+      <ol>
+        <li class="human"><em>person</em><b>Fix the manuscript</b>.gm and style.toml</li>
+        <li><em>01 · 02</em><b>Record it</b>git commit</li>
+        <li><em>03</em><b>Typeset and check</b>check · lint · preflight · build</li>
+        <li><em>04</em><b>Compare with the last version</b>pages as images with shem</li>
+        <li class="human"><em>person</em><b>Check the changed pages</b>back to the start to fix</li>
+      </ol>
+      <p>In one round, human hands are needed only at the two black steps. Moving changes between copies and comparing every page of the proofs are not in the loop. Take away any one of the four, and the loop does not close.</p>
+    </div>
+    <div class="gone">
+      <h3>You no longer need to</h3>
+      <ul>
+        <li>move changes by hand between the copies in Word, InDesign and PDF<span>02 Version control</span></li>
+        <li>tell the latest file apart by adding "final" to its name<span>02 Version control</span></li>
+        <li>keep the rules of typesetting only in one person's head<span>02 Version control</span></li>
+        <li>hunt for why the line breaks moved after a font update<span>01 Determinism</span></li>
+        <li>wait together for the one licensed machine to be free<span>03 CI</span></li>
+        <li>lay the first and second proofs side by side and follow each correction line by line<span>04 Visual regression tests</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="extend" aria-labelledby="extend-h">
+    <h2 id="extend-h">Extend it with plugins and functions</h2>
+    <div class="ext">
+      <div>
+        <h3>Plugins<small>.wasm</small></h3>
+        <p>When the built-in commands are not enough, add a plugin. A plugin is a WebAssembly file, and Golem gives it no files, network, clock or randomness. So a book with plugins still typesets to the same bytes.</p>
+        <ul>
+          <li><b>Commands</b>called in a paragraph, like <code>[furigana: ...]</code></li>
+          <li><b>Block commands</b>called like <code>@tsv-table sales</code>, and give tables and blocks</li>
+          <li><b>Filters</b>take one source file and give it back rewritten</li>
+          <li><b>Lists</b>collect from all over the text into a glossary or an index of names</li>
+        </ul>
+<pre><code><span class="c"># manifest.toml</span>
+<span class="k">[plugins.furigana]</span>
+url = "https://example.com/furigana/v1.0.0/furigana.wasm"
+
+<span class="c">$</span> golem plugin lock   <span class="c"># writes the hash to plugins.lock</span></code></pre>
+      </div>
+      <div>
+        <h3>Functions<small>.emet</small></h3>
+        <p>Small calculations and formats for one book are written as functions in Emet, Golem's language for functions, and called from the manuscript. A function reads only the files that <code>[functions.requires]</code> of the manifest allows.</p>
+<pre lang="ja"><code><span class="c">-- fn/numbers.emet</span>
+<span class="k">pub inline</span> yen :: Nat -&gt; Inlines
+yen n = Inline.text (commas n ++ "円")
+
+<span class="c">-- numbers.gm</span>
+@import fn/numbers.emet as n
+総額は[n.yen 1234567]です。
+<span class="c">→ 総額は1,234,567円です。</span></code></pre>
+        <p class="note">Emet is experimental during Golem 1.x: how it is written can change in a version whose second number goes up.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="compare" aria-labelledby="compare-h">
+    <h2 id="compare-h">Compared with TeX and InDesign</h2>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th scope="col"><span class="visually-hidden">Aspect</span></th><th scope="col">Golem</th><th scope="col">TeX</th><th scope="col">InDesign</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Manuscript</th><td>Text, with no macros that replace text</td><td>Text and macros</td><td>A document that is the result of operations on screen</td></tr>
+          <tr><th scope="row">Where errors point</th><td>Always the file, the line and a code in the manuscript</td><td>Errors after macro expansion easily lose their place in the manuscript</td><td>—</td></tr>
+          <tr><th scope="row">Styles</th><td>Data in <code>style.toml</code></td><td>Macros (programs)</td><td>Paragraph styles, an idea much like Golem's</td></tr>
+          <tr><th scope="row">Reproducible output</th><td>The same bytes from the same input (PDF, HTML, plain text)</td><td>—</td><td>—</td></tr>
+          <tr><th scope="row">Japanese typesetting</th><td>Built-in rules that follow JLReq</td><td>Chosen and combined from packages</td><td>Built in</td></tr>
+          <tr><th scope="row">Running in CI</th><td>Runs as it is, with no license activation</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">"—" marks what the preface of Golem's manual does not compare. Golem cannot typeset mathematics yet. Nor can it, for now, lay out pages directly on screen, place frames anywhere on a page, or print spot colours.</p>
+  </section>
+
+  <section id="manuals" aria-labelledby="manuals-h">
+    <h2 id="manuals-h">Two manuals, typeset with Golem</h2>
+    <div class="manuals">
+      <div class="manual">
+        <div class="cover" lang="ja">Golem マニュアル<i lang="en">USER</i></div>
+        <div>
+          <h3>User manual</h3>
+          <p>For people who make books. From the first book to the markup, the manifest, styles, output, checks, Git and CI, editors and plugins. The appendices list the settings, the error codes and Emet.</p>
+          <p class="fmt"><a class="pdf" href="https://github.com/tett23/golem/releases/download/v0.1.0-rc4/golem-manual-v0.1.0-rc4.pdf">PDF</a><a href="https://github.com/tett23/golem/releases/download/v0.1.0-rc4/golem-manual-v0.1.0-rc4-html.tar.gz">HTML (tar.gz)</a></p>
+        </div>
+      </div>
+      <div class="manual">
+        <div class="cover dev" lang="ja">Golem 開発者のマニュアル<i lang="en">DEV</i></div>
+        <div>
+          <h3>Developer manual</h3>
+          <p>For people who build systems on Golem and people who develop Golem. Commands and diagnostics, CI, LSP, writing plugins, the IR, the modules, Emet, determinism and releases.</p>
+          <p class="fmt"><a class="pdf" href="https://github.com/tett23/golem/releases/download/v0.1.0-rc4/golem-dev-manual-v0.1.0-rc4.pdf">PDF</a><a href="https://github.com/tett23/golem/releases/download/v0.1.0-rc4/golem-dev-manual-v0.1.0-rc4-html.tar.gz">HTML (tar.gz)</a></p>
+        </div>
+      </div>
+    </div>
+    <p class="note">Both are written in Japanese, typeset with Golem v0.1.0-rc4 and attached to the release.</p>
+  </section>
+
+  <section id="related" aria-labelledby="related-h">
+    <h2 id="related-h">Related projects</h2>
+    <div class="rel">
+      <a href="../../aleph/"><span class="role">Editor</span><span class="name">Aleph</span><span class="desc">A desktop app for writing Golem manuscripts: vertical and horizontal editing, a page preview as you write, plots and Git. Its page is in Japanese.</span><span class="go">The Aleph page →</span></a>
+      <a href="https://github.com/tett23/shem"><span class="role">Rasterizer</span><span class="name">shem</span><span class="desc">Draws the pages of Golem's PDFs as PNG. Golem's visual regression tests and the preview on this page use it.</span><span class="go">GitHub →</span></a>
+      <a href="../../peg-hs/"><span class="role">Parser generator</span><span class="name">peg-hs</span><span class="desc">Generates Haskell parsers from PEG grammars. Golem's parser of <code>.gm</code> is generated with peg-hs.</span><span class="go">The peg-hs page →</span></a>
+    </div>
+  </section>
+
+  <section id="install" aria-labelledby="install-h">
+    <h2 id="install-h">Install</h2>
+    <p class="lead">Download the archive for your platform and <code>SHA256SUMS</code> from the release, check them, then extract. There are builds for Linux (x86-64 and aarch64) and macOS (Apple silicon); on Windows, use the Linux build under WSL2.</p>
+<pre class="shell"><code>TAG=v0.1.0-rc4
+curl -LO "https://github.com/tett23/golem/releases/download/$TAG/golem-$TAG-x86_64-linux.tar.gz"
+curl -LO "https://github.com/tett23/golem/releases/download/$TAG/SHA256SUMS"
+sha256sum --ignore-missing -c SHA256SUMS
+tar -xzf "golem-$TAG-x86_64-linux.tar.gz"
+install -m 755 "golem-$TAG-x86_64-linux/golem" "$HOME/.local/bin/golem"
+golem new mybook --language en</code></pre>
+    <p class="note">On macOS, use the <code>aarch64-macos</code> archive and <code>shasum -a 256 --ignore-missing -c SHA256SUMS</code>. The macOS executable is not notarized; if a browser downloaded it, remove the attribute with <code>xattr -d com.apple.quarantine golem</code>.</p>
+    <ul class="links">
+      <li><a href="https://github.com/tett23/golem/releases/tag/v0.1.0-rc4">The release of Golem v0.1.0-rc4</a></li>
+      <li><a href="https://github.com/tett23/golem">The repository</a></li>
+    </ul>
+  </section>
+  </main>
+
+  <footer>Golem · MIT License · <a href="https://github.com/tett23">tett23</a> · <a href="../../">Other products</a></footer>
+</div>
+</body>
+</html>

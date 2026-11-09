@@ -151,7 +151,10 @@ Deno.test("the implemented set", () => {
   ]);
 });
 
-Deno.test("every product wasm imports only what is implemented", async () => {
+// golem.wasm imports file functions that it never calls with no preopened directory (ADR 0003).
+const CALLED_NOT_IMPORTED = new Set(["golem.wasm"]);
+
+Deno.test("every product wasm but golem.wasm imports only what is implemented", async () => {
   const assets = Deno.env.get("ASSETS_DIR") ?? new URL("../../_assets/", import.meta.url).pathname;
   const lock = readLock(await Deno.readTextFile(new URL("../wasm.lock", import.meta.url)));
   const wasms = lock.filter((e) => e.name.endsWith(".wasm"));
@@ -160,7 +163,26 @@ Deno.test("every product wasm imports only what is implemented", async () => {
     const mod = new WebAssembly.Module(await Deno.readFile(`${assets}/${name}`));
     for (const imp of WebAssembly.Module.imports(mod)) {
       assertEquals(imp.module, "wasi_snapshot_preview1", `${name}: ${imp.module}.${imp.name}`);
-      assert(IMPLEMENTED.has(imp.name), `${name} imports ${imp.name}`);
+      if (!CALLED_NOT_IMPORTED.has(name)) assert(IMPLEMENTED.has(imp.name), `${name} imports ${imp.name}`);
     }
   }
+});
+
+Deno.test("building the sample with golem.wasm calls only what is implemented", async () => {
+  const assets = Deno.env.get("ASSETS_DIR") ?? new URL("../../_assets/", import.meta.url).pathname;
+  const { loadGolem } = await import("../golem/golem.ts");
+  const sample = (f: string) => Deno.readTextFile(new URL(`../golem/sample/${f}`, import.meta.url));
+  const called = new Set<string>();
+  const g = await loadGolem(await WebAssembly.compile(await Deno.readFile(`${assets}/golem.wasm`)), {
+    onCall: (name) => called.add(name),
+  });
+  const r = g.build({
+    manifest: await sample("manifest.toml"),
+    style: await sample("style.toml"),
+    source: await sample("kumo-no-ito.gm"),
+    font: await Deno.readFile(`${assets}/NotoSerifJP-Regular.otf`),
+  });
+  assert(r.status === 0 && r.pdf !== null);
+  assert(called.size > 0);
+  for (const name of called) assert(IMPLEMENTED.has(name), `golem.wasm called ${name}`);
 });
