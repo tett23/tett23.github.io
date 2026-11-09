@@ -1,6 +1,6 @@
 # ADR 0003: Golem v0.1.0-rc4 の golem.wasm と shem v0.1.0-rc7 の shem.wasm で Golem のページを作る
 
-ステータス: 採択
+ステータス: 採択→Aleph のページからリンクする版とスクリーンショットの版は [ADR 0004](0004-aleph-page-for-v1-0-0-rc3.md)
 
 ## 文脈
 

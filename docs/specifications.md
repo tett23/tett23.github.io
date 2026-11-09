@@ -63,13 +63,13 @@ tett23.github.io（`https://tett23.github.io/`）の現行の仕様をまとめ�
 
 ## Aleph のページ
 
-`https://tett23.github.io/aleph/` に、Aleph の紹介ページを日本語で置く（[ADR 0002](adr/0002-aleph-page.md)、[ADR 0003](adr/0003-golem-page-with-golem-wasm-v0-1-0-rc4.md)）。
+`https://tett23.github.io/aleph/` に、Aleph の紹介ページを日本語で置く（[ADR 0002](adr/0002-aleph-page.md)、[ADR 0003](adr/0003-golem-page-with-golem-wasm-v0-1-0-rc4.md)、[ADR 0004](adr/0004-aleph-page-for-v1-0-0-rc3.md)）。
 
 - 「本と PDF をつくることに特化した執筆・組版環境」と説明し、ヒーローにアイコンと「無限の可能性。自由に、本をつくろう。」を置く。
-- 節は、ヒーロー、画面、機能の一覧（12 項目）、Golem との関係、インストール、締めの順に並ぶ。色はアイコンの黒（#141416）と白（#f2efe8）に、強調にアプリのダークの外観の黄色（#c9a862）を使う。
+- 節は、ヒーロー、画面、機能の一覧（13 項目）、Golem との関係、インストール、締めの順に並ぶ。色はアイコンの黒（#141416）と白（#f2efe8）に、強調にアプリのダークの外観の黄色（#c9a862）を使う。
 - 画面のカルーセルは、エディタ、ページのプレビュー、プロット、設定の 4 枚で、NablaSKK のページと同じ `site/lib/carousel.ts` で動かす。撮り方は `site/aleph/screenshots/README.md` にある。
-- リンクする版は Aleph v1.0.0-rc2 で、ページの中のリリースへのリンクとスクリーンショットの README の版をそろえる。インストールの節に、公証を受けていないための `xattr -dr com.apple.quarantine /Applications/Aleph.app` の手順を書く。
-- アイコン（`site/aleph/icon.svg`）は Aleph の v1.0.0-rc2 のタグの `public/icon.svg` を写したもので、ファビコンにも使う。
+- リンクする版は Aleph v1.0.0-rc3 で、ページの中のリリースへのリンクとスクリーンショットの README の版をそろえる。インストールの節に、公証を受けていないための `xattr -dr com.apple.quarantine /Applications/Aleph.app` の手順を書く。
+- アイコン（`site/aleph/icon.svg`）は Aleph の v1.0.0-rc2 のタグの `public/icon.svg` を写したもの（v1.0.0-rc3 でも同じ）で、ファビコンにも使う。
 
 ## ADR の検査
 

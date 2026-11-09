@@ -31,7 +31,7 @@
       <h1 id="hero-h">無限の可能性。<br><em>自由に</em>、本をつくろう。</h1>
       <p class="lead">Aleph は、本と PDF をつくることに特化した執筆・組版環境です。縦書きの原稿を書き、Golem で組んだページを 300 dpi で確かめ、プロットと進み具合を一つの画面で扱えます。</p>
       <div class="cta">
-        <a class="btn primary" href="https://github.com/tett23/aleph/releases/tag/v1.0.0-rc2">ダウンロード</a>
+        <a class="btn primary" href="https://github.com/tett23/aleph/releases/tag/v1.0.0-rc3">ダウンロード</a>
         <a class="btn" href="https://github.com/tett23/aleph">GitHub</a>
         <span class="req">macOS（Apple Silicon）・プレリリース</span>
       </div>
@@ -40,7 +40,7 @@
 
   <section id="screens" aria-labelledby="screens-h">
     <h2 id="screens-h"><small lang="en">SCREENS</small>書いて、組んで、確かめる</h2>
-    <p class="sub">原稿の編集から、ページの仕上がり、作品の設計まで。v1.0.0-rc2 のアプリで撮った画面です。</p>
+    <p class="sub">原稿の編集から、ページの仕上がり、作品の設計まで。v1.0.0-rc3 のアプリで撮った画面です。</p>
     <div class="carousel" data-carousel aria-roledescription="carousel" aria-labelledby="screens-h">
       <div class="track" data-track>
         <div class="slide" data-slide id="slide-editor" role="tabpanel" aria-roledescription="slide" aria-labelledby="tab-editor">
@@ -79,8 +79,9 @@
     <ul class="feat">
       <li><h3>縦書きと横書きのエディタ</h3><p>一つのエディタで、縦書きと横書きを切りかえて書きます。</p></li>
       <li><h3>ページのプレビュー</h3><p>Golem で組んだ PDF を shem で描いて並べます。解像度は設定で決めるか、枠の幅と画面の倍率から自動で決めます。別のウィンドウにも出せます。</p></li>
+      <li><h3>ビルド</h3><p>ツールバーの金槌で、ターゲット、プロファイル、トンボを選んで、PDF、HTML、EPUB、テキストを書き出します。⇧⌘B で前回と同じ選び方でビルドします。</p></li>
       <li><h3>本文のプレビュー</h3><p>Golem の HTML の出力で、見出し、ルビ、表を組んだ本文を読めます。</p></li>
-      <li><h3>診断と補完</h3><p><code>golem lsp</code> とつながり、誤りの診断、補完、ホバー、整形を使えます。</p></li>
+      <li><h3>診断と補完</h3><p><code>golem lsp</code> とつながり、誤りの診断、補完、ホバー、整形を使えます。開いているシートとプロジェクトの診断は、問題のパネルに集まります。</p></li>
       <li><h3>改ページの見積もり</h3><p>原稿のどこでページが改まるかの見積もりを出します。</p></li>
       <li><h3>プロットとガントチャート</h3><p>シーンを表で書き、サブプロットごとの時間の流れをガントチャートで見渡します。</p></li>
       <li><h3>目標の字数と原稿用紙</h3><p>シートごとに目標の字数を立て、字数、ワード数、原稿用紙の枚数を数えます。</p></li>
@@ -95,7 +96,7 @@
   <section id="golem" class="golem" aria-labelledby="golem-h">
     <div>
       <h2 id="golem-h"><small lang="en">POWERED BY GOLEM</small>組版は Golem に任せる</h2>
-      <p>Aleph のページのプレビューは、組版システム Golem が組んだ PDF そのものです。Golem と、PDF を画像に描く shem をアプリに同梱しているので、別に入れる必要はありません。v1.0.0-rc2 は golem v0.1.0-rc4 と shem v0.1.0-rc7 を同梱しています。</p>
+      <p>Aleph のページのプレビューは、組版システム Golem が組んだ PDF そのものです。Golem と、PDF を画像に描く shem をアプリに同梱しているので、別に入れる必要はありません。v1.0.0-rc3 は golem v0.1.0-rc4 と shem v0.1.0-rc7 を同梱しています。</p>
       <a class="more" href="../golem/">Golem について →</a>
     </div>
     <ol class="pipe" aria-label="ページのプレビューの流れ">
@@ -108,20 +109,20 @@
   <section id="install" aria-labelledby="install-h">
     <h2 id="install-h"><small lang="en">INSTALL</small>インストール</h2>
     <ol class="steps">
-      <li><a href="https://github.com/tett23/aleph/releases/download/v1.0.0-rc2/Aleph-v1.0.0-rc2-aarch64-macos.zip"><code>Aleph-v1.0.0-rc2-aarch64-macos.zip</code></a> と <a href="https://github.com/tett23/aleph/releases/download/v1.0.0-rc2/SHA256SUMS"><code>SHA256SUMS</code></a> をダウンロードし、照合します。
+      <li><a href="https://github.com/tett23/aleph/releases/download/v1.0.0-rc3/Aleph-v1.0.0-rc3-aarch64-macos.zip"><code>Aleph-v1.0.0-rc3-aarch64-macos.zip</code></a> と <a href="https://github.com/tett23/aleph/releases/download/v1.0.0-rc3/SHA256SUMS"><code>SHA256SUMS</code></a> をダウンロードし、照合します。
 <pre><code>shasum -a 256 --ignore-missing -c SHA256SUMS</code></pre></li>
       <li>zip を展開し、<code>Aleph.app</code> を「アプリケーション」に移します。</li>
       <li>Aleph は公証を受けていないので、ダウンロードしたままでは macOS が開くのを拒みます。一度だけ、次を実行します。
 <pre><code>xattr -dr com.apple.quarantine /Applications/Aleph.app</code></pre></li>
     </ol>
-    <p class="note">配布物は Apple Silicon の Mac のためのものだけです。リリースノートは <a href="https://github.com/tett23/aleph/releases/tag/v1.0.0-rc2">v1.0.0-rc2 のリリース</a>にあります。</p>
+    <p class="note">配布物は Apple Silicon の Mac のためのものだけです。リリースノートは <a href="https://github.com/tett23/aleph/releases/tag/v1.0.0-rc3">v1.0.0-rc3 のリリース</a>にあります。</p>
   </section>
 
   <section class="closing" aria-labelledby="closing-h">
     <img src="icon.svg" alt="" width="96" height="96">
     <h2 id="closing-h">書きたい本を、最後まで。</h2>
     <div class="cta">
-      <a class="btn primary" href="https://github.com/tett23/aleph/releases/tag/v1.0.0-rc2">ダウンロード</a>
+      <a class="btn primary" href="https://github.com/tett23/aleph/releases/tag/v1.0.0-rc3">ダウンロード</a>
       <a class="btn" href="https://github.com/tett23/aleph">GitHub</a>
     </div>
   </section>
