@@ -6,6 +6,7 @@ import { offsetOf } from "../peg-hs/position.ts";
 import type { Diagnostic } from "./frame.ts";
 import { SOURCE, STYLE } from "./golem.ts";
 import { highlight } from "./highlight.ts";
+import { fitCanvas } from "./fit.ts";
 import { createPreview, type View } from "./preview.ts";
 import { createScheduler } from "./schedule.ts";
 import { stringsFor } from "./strings.ts";
@@ -83,17 +84,35 @@ const mount = async (root: HTMLElement) => {
   // The preview: bitmaps of the shown spread only, closed on the next build.
   let buildId = 0;
   let rasterMs = 0;
+  const paintPage = (c: HTMLCanvasElement, bitmap: ImageBitmap) => {
+    const size = fitCanvas(c.clientWidth, globalThis.devicePixelRatio || 1, bitmap.width, bitmap.height);
+    c.width = size.width;
+    c.height = size.height;
+    const ctx = c.getContext("2d")!;
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
+    ctx.drawImage(bitmap, 0, 0, size.width, size.height);
+  };
+  let lastView: View<Rendered> | undefined;
+  // Draw again at the new size when the frame changes its width.
+  new ResizeObserver(() => {
+    const v = lastView;
+    if (!v) return;
+    (["left", "right"] as const).forEach((side) => {
+      const shown = v[side];
+      if (shown) paintPage(canvases[side], shown.bitmap.bitmap);
+    });
+  }).observe(canvases.left.parentElement!);
   const draw = (v: View<Rendered>) => {
     (["left", "right"] as const).forEach((side) => {
       const c = canvases[side];
       const shown = v[side];
       c.hidden = !shown;
       if (!shown) return;
-      c.width = shown.bitmap.bitmap.width;
-      c.height = shown.bitmap.bitmap.height;
-      c.getContext("2d")!.drawImage(shown.bitmap.bitmap, 0, 0);
+      paintPage(c, shown.bitmap.bitmap);
       c.setAttribute("aria-label", S.pageAlt(shown.page, pageCount));
     });
+    lastView = v;
     const pages = [v.right?.page, v.left?.page].filter((p): p is number => p !== undefined);
     label.textContent = S.pageOf(Math.min(...pages), Math.max(...pages), pageCount);
     next.disabled = v.index >= v.count - 1;
