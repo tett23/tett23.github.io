@@ -61,3 +61,52 @@ Deno.test("a stale file is removed when the download does not match", async () =
   assert((await run(`${dir}/wasm.lock`, `${dir}/out`)).code !== 0);
   assert(!(await exists(`${dir}/out/a.wasm`)));
 });
+
+// A tar.gz with two files, made with the tar of the system (ADR 0003).
+const archive = async () => {
+  const dir = await Deno.makeTempDir();
+  await Deno.mkdir(`${dir}/src/pkg`, { recursive: true });
+  const body = new TextEncoder().encode("the module");
+  await Deno.writeFile(`${dir}/src/pkg/golem.wasm`, body);
+  await Deno.writeTextFile(`${dir}/src/pkg/README`, "readme");
+  const r = await new Deno.Command("sh", { args: ["-c", `cd "${dir}/src" && tar -czf ../a.tar.gz pkg`] }).output();
+  assertEquals(r.code, 0);
+  return { dir, url: `file://${dir}/a.tar.gz`, sha: await sha256(body) };
+};
+
+Deno.test("a fourth field takes that file out of the archive, and nothing else", async () => {
+  const { dir, url, sha } = await archive();
+  await Deno.writeTextFile(`${dir}/wasm.lock`, `g.wasm ${url} ${sha} pkg/golem.wasm\n`);
+  const r = await run(`${dir}/wasm.lock`, `${dir}/out`);
+  assertEquals(r.code, 0, r.stderr);
+  assertEquals(await Deno.readTextFile(`${dir}/out/g.wasm`), "the module");
+  assertEquals([...Deno.readDirSync(`${dir}/out`)].map((e) => e.name), ["g.wasm"]);
+});
+
+Deno.test("a file taken out of an archive with the wrong SHA-256 fails and leaves no file", async () => {
+  const { dir, url } = await archive();
+  await Deno.writeTextFile(`${dir}/wasm.lock`, `g.wasm ${url} ${"0".repeat(64)} pkg/golem.wasm\n`);
+  const r = await run(`${dir}/wasm.lock`, `${dir}/out`);
+  assert(r.code !== 0);
+  assert(r.stderr.includes("g.wasm"), r.stderr);
+  assertEquals([...Deno.readDirSync(`${dir}/out`)].map((e) => e.name), []);
+});
+
+Deno.test("a path that the archive does not have fails and leaves no file", async () => {
+  const { dir, url, sha } = await archive();
+  await Deno.writeTextFile(`${dir}/wasm.lock`, `g.wasm ${url} ${sha} pkg/missing.wasm\n`);
+  const r = await run(`${dir}/wasm.lock`, `${dir}/out`);
+  assert(r.code !== 0);
+  assert(r.stderr.includes("pkg/missing.wasm"), r.stderr);
+  assertEquals([...Deno.readDirSync(`${dir}/out`)].map((e) => e.name), []);
+});
+
+Deno.test("a file from an archive whose SHA-256 matches is not fetched again", async () => {
+  const { dir, url, sha } = await archive();
+  await Deno.writeTextFile(`${dir}/wasm.lock`, `g.wasm ${url} ${sha} pkg/golem.wasm\n`);
+  assertEquals((await run(`${dir}/wasm.lock`, `${dir}/out`)).code, 0);
+  await Deno.remove(`${dir}/a.tar.gz`);
+  const r = await run(`${dir}/wasm.lock`, `${dir}/out`);
+  assertEquals(r.code, 0, r.stderr);
+  assertEquals(await Deno.readTextFile(`${dir}/out/g.wasm`), "the module");
+});

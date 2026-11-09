@@ -52,3 +52,12 @@ Deno.test("external scripts, stylesheets and fonts are reported", async () => {
     "s.css: external https://e/x.css",
   ]);
 });
+
+Deno.test("alternate and canonical links to another origin are links, not loads (ADR 0001)", async () => {
+  const dir = await site({
+    "index.html": `<link rel="alternate" hreflang="en" href="https://tett23.github.io/en/">
+      <link rel="canonical" href="https://tett23.github.io/">
+      <link rel="stylesheet" href="https://cdn.example/x.css">`,
+  });
+  assertEquals(await checkSite(dir), ["index.html: external https://cdn.example/x.css"]);
+});
