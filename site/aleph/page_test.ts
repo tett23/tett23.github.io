@@ -1,4 +1,4 @@
-// The Aleph page (ADR 0002, ADR 0003, ADR 0004). The HTML of site/ is copied to _site/ as it is.
+// The Aleph page (ADR 0002, ADR 0003, ADR 0004, ADR 0006). The HTML of site/ is copied to _site/ as it is.
 import { assert, assertEquals } from "../lib/assert.ts";
 
 const read = (p: string) => Deno.readTextFile(new URL(p, import.meta.url));
@@ -39,12 +39,16 @@ Deno.test("the page links to the Golem page", () => {
   assert(html.includes('href="../golem/"'));
 });
 
-// ADR 0004: the page links to Aleph v1.0.0-rc3 and lists the build among the features.
-Deno.test("the release links are of v1.0.0-rc3, and no v1.0.0-rc2 is left", () => {
+// ADR 0006: the page links to Aleph v1.0.0-rc4, and no older version is left.
+Deno.test("the release links are of v1.0.0-rc4, and no older version is left", () => {
   const tags = new Set([...html.matchAll(/tett23\/aleph\/releases\/(?:tag|download)\/([^/"]+)/g)].map((m) => m[1]));
-  assertEquals([...tags], ["v1.0.0-rc3"]);
-  assert(!html.includes("v1.0.0-rc2"), "v1.0.0-rc2 is left on the page");
+  assertEquals([...tags], ["v1.0.0-rc4"]);
+  for (const old of ["v1.0.0-rc1", "v1.0.0-rc2", "v1.0.0-rc3"]) {
+    assert(!html.includes(old), `${old} is left on the page`);
+  }
 });
+
+// ADR 0004: the build is among the features.
 
 Deno.test("the features are 13, with the build right after the page preview", () => {
   const at = html.indexOf('class="feat"');
