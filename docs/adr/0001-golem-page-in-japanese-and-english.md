@@ -1,6 +1,6 @@
 # ADR 0001: Golem のページを日本語と英語で作り、拡張、マニュアル、関連プロジェクトの節を足す
 
-ステータス: 採択→取り込む版、wasm.lock のアーカイブの欄、WASI の検査、入力のファイル、見開きの組み方は [ADR 0003](0003-golem-page-with-golem-wasm-v0-1-0-rc4.md)、関連プロジェクトの peg-hs の説明は [ADR 0005](0005-peg-hs-card-names-emet.md)
+Status: superseded [{"by":["docs/adr/0003-golem-page-with-golem-wasm-v0-1-0-rc4.md"],"part":"取り込む版、wasm.lock のアーカイブの欄、WASI の検査、入力のファイル、見開きの組み方"},{"by":["docs/adr/0005-peg-hs-card-names-emet.md"],"part":"関連プロジェクトの peg-hs の説明"}]
 
 ## 文脈
 

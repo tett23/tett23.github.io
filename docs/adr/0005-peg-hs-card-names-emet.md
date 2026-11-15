@@ -1,6 +1,6 @@
 # ADR 0005: Golem のページの peg-hs の説明に Emet のパーサを足す
 
-ステータス: 採択
+Status: accepted
 
 ## 文脈
 
