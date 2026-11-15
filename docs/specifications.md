@@ -74,7 +74,11 @@ tett23.github.io（`https://tett23.github.io/`）の現行の仕様をまとめ�
 ## ADR の検査
 
 - コミット済みの ADR の変更は、[adr-guard](https://github.com/tett23/adr-guard) で拒否する。pre-commit hook（`.githooks/pre-commit`）は `adr-guard pre-commit --allow-status --allow-links` を実行する。
-- CI の `adr` ジョブは adr-guard v0.10.0 の action を使う。
+- CI の `adr` ジョブは adr-guard v0.13.1 の action を使う（[ADR 0007](adr/0007-update-adr-guard-to-v0-13-1.md)）。
+- ADR のステータスの行は、`Status: <トークン>` の形で書く。トークンは `proposed`、`accepted`、`accepted-pending`、`rejected`、`discarded`、`deprecated`、または `superseded [<変更の JSON 配列>]` である（[ADR 0007](adr/0007-update-adr-guard-to-v0-13-1.md)）。
+- ADR は、レビューを受けた後に `Status: proposed` でコミットし、次のコミットで `accepted` か `accepted-pending`（採択したが、まだ実装していない）にする。
+- 後の ADR が一部を変えた ADR は、ステータスを `superseded [{"part":"<部分名>","by":["docs/adr/<後の ADR>.md"]}]` にする。部分名は、変えられた部分の名前である。修正の関係は `adr-guard trace` でたどれる。
+- pre-commit hook と CI は、ステータスの行の状態遷移を検査する。許されない遷移（新しい ADR を `accepted` で足すなど）は、`--allow-status` を付けても通らない。
 - 文書の中の、ほかのリポジトリの ADR の参照は、リンクのテキストごと外部リンクにする。
 
 ## 破棄した ADR

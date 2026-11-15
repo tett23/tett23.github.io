@@ -1,6 +1,6 @@
 # ADR 0006: Aleph のページを v1.0.0-rc4 に合わせる
 
-ステータス: 採択
+Status: accepted
 
 ## 文脈
 
